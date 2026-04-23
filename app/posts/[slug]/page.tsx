@@ -72,12 +72,13 @@ export default async function PostPage({
       {tags.length > 0 ? (
         <div className="mb-8 flex flex-wrap gap-2">
           {tags.map((tag) => (
-            <span
+            <Link
               key={tag.id}
+	      href={`/tags/${tag.slug}`}
               className="rounded-full bg-gray-100 px-3 py-1 text-sm"
             >
               #{tag.name}
-            </span>
+            </Link>
           ))}
         </div>
       ) : null}

@@ -1,41 +1,25 @@
-import Link from 'next/link'
-import { getPosts, getCategoryLabel } from '@/lib/cms'
-
-function formatDate(dateString?: string | null) {
-  if (!dateString) return '未設定發布時間'
-
-  return new Intl.DateTimeFormat('zh-TW', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  }).format(new Date(dateString))
-}
+import PostCard from '@/components/PostCard'
+import SectionHeading from '@/components/SectionHeading'
+import { getPosts } from '@/lib/cms'
 
 export default async function PostsPage() {
-  const posts = await getPosts()
+  const posts = await getPosts(24)
 
   return (
-    <main className="mx-auto max-w-4xl px-6 py-10">
-      <h1 className="mb-8 text-3xl font-bold">所有文章</h1>
+    <main className="mx-auto max-w-6xl px-6 py-10">
+      <SectionHeading
+        title="所有文章"
+        subtitle="目前由 CMS 發布的最新文章內容。"
+      />
 
       {posts.length === 0 ? (
         <p>目前沒有文章。</p>
       ) : (
-        <ul className="space-y-4">
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {posts.map((post) => (
-            <li key={post.id} className="rounded-lg border p-4">
-              <Link
-                href={`/posts/${post.slug}`}
-                className="text-xl font-semibold hover:underline"
-              >
-                {post.title}
-              </Link>
-              <div className="mt-2 text-sm text-gray-600">
-                {getCategoryLabel(post.category)}・{formatDate(post.publishedAt)}
-              </div>
-            </li>
+            <PostCard key={post.id} post={post} />
           ))}
-        </ul>
+        </div>
       )}
     </main>
   )
