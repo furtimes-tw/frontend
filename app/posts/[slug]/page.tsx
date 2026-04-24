@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getPostBySlug, getCategoryLabel, getMediaURL } from '@/lib/cms'
 import { CMSPost } from '@/types/cms'
-import RichTextRenderer from '@/components/RichTextRenderer'
+import RichTextContent from '@/components/RichTextContent'
 
 function formatDate(dateString?: string | null) {
   if (!dateString) return '未設定發布時間'
@@ -84,7 +84,7 @@ export default async function PostPage({
       ) : null}
 
       <section>
-        <RichTextRenderer content={post.content} />
+        <RichTextContent content={post.content} />
       </section>
     </main>
   )
