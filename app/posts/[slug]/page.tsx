@@ -84,7 +84,7 @@ export default async function PostPage({
       ) : null}
 
       <section>
-        <RichTextContent content={post.content} />
+        <RichTextContent content={post.content as any} />
       </section>
     </main>
   )

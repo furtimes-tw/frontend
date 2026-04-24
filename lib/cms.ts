@@ -68,14 +68,14 @@ async function fetchCMS<T>(path: string, revalidate = 60): Promise<T> {
 
 export async function getPosts(limit = 12): Promise<CMSPost[]> {
   const data = await fetchCMS<PayloadListResponse<CMSPost>>(
-    `/api/posts?depth=1&sort=-publishedAt&limit=${limit}`
+    `/api/posts?depth=2&sort=-publishedAt&limit=${limit}`
   )
   return data.docs
 }
 
 export async function getPostBySlug(slug: string): Promise<CMSPost | null> {
   const data = await fetchCMS<PayloadListResponse<CMSPost>>(
-    `/api/posts?where[slug][equals]=${encodeURIComponent(slug)}&depth=1&limit=1`
+    `/api/posts?where[slug][equals]=${encodeURIComponent(slug)}&depth=2&limit=1`
   )
   return data.docs[0] ?? null
 }
@@ -85,7 +85,7 @@ export async function getPostsByCategory(
   limit = 12
 ): Promise<CMSPost[]> {
   const data = await fetchCMS<PayloadListResponse<CMSPost>>(
-    `/api/posts?where[category][equals]=${encodeURIComponent(category)}&depth=1&sort=-publishedAt&limit=${limit}`
+    `/api/posts?where[category][equals]=${encodeURIComponent(category)}&depth=2&sort=-publishedAt&limit=${limit}`
   )
   return data.docs
 }
@@ -99,7 +99,7 @@ export async function getPostsByTagSlug(
   if (!tag) return []
 
   const data = await fetchCMS<PayloadListResponse<CMSPost>>(
-    `/api/posts?where[tags][in]=${encodeURIComponent(String(tag.id))}&depth=1&sort=-publishedAt&limit=${limit}`
+    `/api/posts?where[tags][in]=${encodeURIComponent(String(tag.id))}&depth=2&sort=-publishedAt&limit=${limit}`
   )
 
   return data.docs
