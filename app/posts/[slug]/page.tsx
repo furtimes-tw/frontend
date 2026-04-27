@@ -45,47 +45,51 @@ export default async function PostPage({
   const tags = getTags(post)
 
   return (
-    <main className="mx-auto max-w-3xl px-6 py-10">
-      <div className="mb-6">
-        <Link href="/" className="text-sm text-gray-600 hover:underline">
-          ← 返回首頁
-        </Link>
-      </div>
-
-      <div className="mb-4 flex items-center gap-3 text-sm text-gray-600">
-        <span className="rounded bg-gray-100 px-2 py-1">
-          {getCategoryLabel(post.category)}
-        </span>
-        <time>{formatDate(post.publishedAt)}</time>
-      </div>
-
-      <h1 className="mb-6 text-4xl font-bold">{post.title}</h1>
-
-      {thumbnail?.url ? (
-        <img
-          src={getMediaURL(thumbnail.url)}
-          alt={thumbnail.alt || post.title}
-          className="mb-8 h-72 w-full rounded-xl object-cover"
-        />
-      ) : null}
-
-      {tags.length > 0 ? (
-        <div className="mb-8 flex flex-wrap gap-2">
-          {tags.map((tag) => (
-            <Link
-              key={tag.id}
-	      href={`/tags/${tag.slug}`}
-              className="rounded-full bg-gray-100 px-3 py-1 text-sm"
-            >
-              #{tag.name}
-            </Link>
-          ))}
+    <main className="mx-auto max-w-5xl px-5 py-10 sm:px-6 lg:px-8">
+      <article className="mx-auto max-w-3xl">
+        <div className="mb-6">
+          <Link href="/" className="text-sm text-gray-600 hover:underline">
+            ← 返回首頁
+          </Link>
         </div>
-      ) : null}
 
-      <section>
-        <RichTextContent content={post.content as any} />
-      </section>
+        <div className="mb-4 flex items-center gap-3 text-sm text-gray-600">
+          <span className="rounded bg-gray-100 px-2 py-1">
+            {getCategoryLabel(post.category)}
+          </span>
+          <time>{formatDate(post.publishedAt)}</time>
+        </div>
+
+        <h1 className="mb-6 text-4xl font-bold leading-tight">
+          {post.title}
+        </h1>
+
+        {thumbnail?.url ? (
+          <img
+            src={getMediaURL(thumbnail.url)}
+            alt={thumbnail.alt || post.title}
+            className="mb-8 h-72 w-full rounded-xl object-cover"
+          />
+        ) : null}
+
+        {tags.length > 0 ? (
+          <div className="mb-8 flex flex-wrap gap-2">
+            {tags.map((tag) => (
+              <Link
+                key={tag.id}
+                href={`/tags/${tag.slug}`}
+                className="rounded-full bg-gray-100 px-3 py-1 text-sm hover:bg-gray-200"
+              >
+                #{tag.name}
+              </Link>
+            ))}
+          </div>
+        ) : null}
+
+        <section className="text-[17px] leading-8">
+          <RichTextContent content={post.content as any} />
+        </section>
+      </article>
     </main>
   )
 }
