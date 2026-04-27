@@ -6,6 +6,14 @@ export const metadata = {
   description: "獸時報新聞網",
 };
 
+const navItems = [
+  { href: '/', label: '首頁' },
+  { href: '/posts', label: '文章' },
+  { href: '/category/Newsflash', label: '快訊' },
+  { href: '/announcements', label: '公告' },
+  { href: '/sponsors', label: '贊助' },
+]
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -20,14 +28,13 @@ export default function RootLayout({
               FurTimes
             </Link>
 
-            <nav className="flex gap-4 text-sm">
-              <Link href="/" className="hover:underline">
-                首頁
-              </Link>
-              <Link href="/posts" className="hover:underline">
-                文章
-              </Link>
-            </nav>
+           <nav className="flex flex-wrap items-center gap-4 text-sm text-zinc-700">
+             {navItems.map((item) => (
+               <Link key={item.href} href={item.href} className="hover:text-zinc-950">
+                 {item.label}
+               </Link>
+             ))}
+           </nav>
           </div>
         </header>
 
