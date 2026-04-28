@@ -95,7 +95,11 @@ export default async function HomePage() {
                   ) : null}
                   <time>{formatDate(item.publishedAt)}</time>
                 </div>
-                <h3 className="text-lg font-semibold">{item.title}</h3>
+                <h3 className="text-lg font-semibold">
+                  <Link href={`/announcements/${item.slug}`} className="hover:underline">
+                    {item.title}
+                  </Link>
+                </h3>
               </article>
             ))}
           </div>

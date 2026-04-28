@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import SectionHeading from '@/components/SectionHeading'
 import RichTextContent from '@/components/RichTextContent'
 import { formatDate,getAnnouncements } from '@/lib/cms'
@@ -24,7 +25,11 @@ export default async function AnnouncementsPage() {
                 <time>{formatDate(item.publishedAt)}</time>
               </div>
 
-              <h2 className="mb-4 text-2xl font-bold">{item.title}</h2>
+              <h2 className="mb-4 text-2xl font-bold">
+                <Link href={`/announcements/${item.slug}`} className="hover:underline">
+                  {item.title}
+                </Link>
+              </h2>
 
               {item.body ? <RichTextContent content={item.body as any} /> : null}
             </article>

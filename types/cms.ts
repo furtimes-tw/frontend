@@ -22,7 +22,7 @@ export type CMSPost = {
   id: number | string
   title: string
   slug: string
-  category: CMSPostCategory 
+  category: CMSPostCategory
   publishedAt?: string | null
   content?: unknown
   thumbnail?: CMSMedia | number | string | null
@@ -32,6 +32,7 @@ export type CMSPost = {
 export type CMSAnnouncement = {
   id: number | string
   title: string
+  slug: string
   body?: unknown
   pinned?: boolean
   publishedAt?: string | null

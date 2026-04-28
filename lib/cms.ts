@@ -128,6 +128,16 @@ export async function getLatestReports(limit = 6): Promise<CMSPost[]> {
   return getPostsByCategory('Report', limit)
 }
 
+export async function getAnnouncementBySlug(
+  slug: string
+): Promise<CMSAnnouncement | null> {
+  const data = await fetchCMS<PayloadListResponse<CMSAnnouncement>>(
+    `/api/announcements?where[slug][equals]=${encodeURIComponent(slug)}&depth=2&limit=1`
+  )
+
+  return data.docs[0] ?? null
+}
+
 export async function getAnnouncements(limit = 5): Promise<CMSAnnouncement[]> {
   const data = await fetchCMS<PayloadListResponse<CMSAnnouncement>>(
     `/api/announcements?sort=-pinned,-publishedAt&limit=${limit}`
