@@ -41,8 +41,11 @@ export type CMSAnnouncement = {
 export type CMSSponsor = {
   id: number | string
   name: string
+  sponsorType: string
+  tier: 'primary' | 'secondary' | 'standard' | 'supporter' | 'special'
+  featured?: boolean
   link?: string | null
-  // tier: 'Gold' | 'Silver' | 'Bronze' | 'Special'
+  description?: string | null
   logo?: CMSMedia | number | string | null
 }
 

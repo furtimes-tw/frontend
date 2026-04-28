@@ -145,9 +145,16 @@ export async function getAnnouncements(limit = 5): Promise<CMSAnnouncement[]> {
   return data.docs
 }
 
-export async function getSponsors(limit = 12): Promise<CMSSponsor[]> {
+export async function getSponsors(limit = 100): Promise<CMSSponsor[]> {
   const data = await fetchCMS<PayloadListResponse<CMSSponsor>>(
     `/api/sponsors?depth=1&sort=tier&limit=${limit}`
+  )
+  return data.docs
+}
+
+export async function getFeaturedSponsors(limit = 8): Promise<CMSSponsor[]> {
+  const data = await fetchCMS<PayloadListResponse<CMSSponsor>>(
+    `/api/sponsors?where[featured][equals]=true&depth=1&limit=${limit}`
   )
   return data.docs
 }

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import PostCard from '@/components/PostCard'
 import SectionHeading from '@/components/SectionHeading'
+import SponsorCard from '@/components/SponsorCard'
 import {
   formatDate,
   getAnnouncements,
@@ -24,6 +25,13 @@ export default async function HomePage() {
       getAnnouncements(3),
       getSponsors(3),
     ])
+
+  const featuredSponsors = sponsors.filter(
+    (sponsor) =>
+      sponsor.sponsorType === 'company' &&
+      sponsor.featured &&
+      ['primary', 'secondary'].includes(sponsor.tier)
+  )
 
   return (
     <main>
@@ -115,31 +123,15 @@ export default async function HomePage() {
       <section className="mx-auto max-w-6xl px-5 py-12 sm:px-6 lg:px-8">
         <SectionHeading title="贊助夥伴" />
 
-        {sponsors.length === 0 ? (
-          <p className="text-zinc-600">目前沒有贊助商資料。</p>
-        ) : (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {sponsors.map((sponsor) => {
-              const logo = getLogo(sponsor)
-
-              return (
-                <div key={sponsor.id} className="rounded-2xl border bg-white p-5 shadow-sm">
-                  <div className="flex h-24 items-center justify-center rounded-xl bg-zinc-50">
-                    {logo?.url ? (
-                      <img
-                        src={getMediaURL(logo.url)}
-                        alt={logo.alt || sponsor.name}
-                        className="max-h-16 max-w-full object-contain"
-                      />
-                    ) : (
-                      <span className="text-sm text-zinc-400">{sponsor.name}</span>
-                    )}
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        )}
+      	{featuredSponsors.length === 0 ? (
+    	  <p className="text-zinc-600">目前沒有首頁顯示的贊助商資料。</p>
+  	  ) : (
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {featuredSponsors.map((sponsor) => (
+            <SponsorCard key={sponsor.id} sponsor={sponsor} compact />
+          ))}
+        </div>
+      )}
 
         <div className="mt-6">
           <Link href="/sponsors" className="inline-flex rounded-lg border bg-white px-4 py-2 text-sm hover:bg-zinc-50">
