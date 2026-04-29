@@ -66,10 +66,10 @@ export default async function SponsorsPage() {
           subtitle="感謝支持獸時報與獸文化內容發展的合作夥伴。"
         />
 
-        <SponsorTierSection title="主要贊助" sponsors={primarySponsors} />
-        <SponsorTierSection title="協力贊助" sponsors={secondarySponsors} />
-        <SponsorTierSection title="一般贊助" sponsors={standardSponsors} compact />
-        <SponsorTierSection title="特別贊助" sponsors={specialSponsors} compact />
+        <SponsorTierSection title="主要贊助" sponsors={primarySponsors} variant="primary" />
+        <SponsorTierSection title="協力贊助" sponsors={secondarySponsors} variant="secondary" />
+        <SponsorTierSection title="一般贊助" sponsors={standardSponsors} variant="standard" />
+        <SponsorTierSection title="特別贊助" sponsors={specialSponsors} variant="special" />
       </section>
 
       <section>
@@ -81,9 +81,9 @@ export default async function SponsorsPage() {
         {individualSponsors.length === 0 ? (
           <p className="text-zinc-600">目前沒有個人贊助資料。</p>
         ) : (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
             {individualSponsors.map((sponsor) => (
-              <SponsorCard key={sponsor.id} sponsor={sponsor} compact />
+              <SponsorCard key={sponsor.id} sponsor={sponsor} variant="supporter" />
             ))}
           </div>
         )}
@@ -95,27 +95,32 @@ export default async function SponsorsPage() {
 function SponsorTierSection({
   title,
   sponsors,
-  compact = false,
+  variant,
 }: {
   title: string
   sponsors: Awaited<ReturnType<typeof getSponsors>>
-  compact?: boolean
+  variant?: 'primary' | 'secondary' | 'standard' | 'supporter' |'special'
 }) {
   if (sponsors.length === 0) return null
 
-  return (
-    <div className="mb-10">
-      <h2 className="mb-4 text-xl font-bold">{title}</h2>
+  const gridClass =
+      variant === 'primary' ? 'grid gap-6 md:grid-cols-2' :
+      variant === 'secondary' ? 'grid gap-6 md:grid-cols-2 lg:grid-cols-3' :
+      variant === 'standard' ? 'grid gap-4 sm:grid-cols-2 lg:grid-cols-4' :
+      variant === 'special' ? 'grid gap-4 sm:grid-cols-2 lg:grid-cols-4' :
+      'grid gap-4 md:grid-cols-2 lg:grid-cols-5'
 
-      <div
-        className={
-          compact
-            ? 'grid gap-4 sm:grid-cols-2 lg:grid-cols-4'
-            : 'grid gap-6 md:grid-cols-2 lg:grid-cols-3'
-        }
-      >
+  return (
+    <div className="mb-12">
+      <h2 className="mb-5 text-xl font-bold">{title}</h2>
+
+      <div className={gridClass}>
         {sponsors.map((sponsor) => (
-          <SponsorCard key={sponsor.id} sponsor={sponsor} compact={compact} />
+          <SponsorCard
+            key={sponsor.id}
+            sponsor={sponsor}
+            variant={variant}
+          />
         ))}
       </div>
     </div>

@@ -2,7 +2,7 @@ import "./globals.css";
 import Link from "next/link";
 
 export const metadata = {
-  title: "FurTimes",
+  title: "獸時報 FurTimes",
   description: "獸時報新聞網",
 };
 
@@ -25,7 +25,7 @@ export default function RootLayout({
         <header className="border-b bg-white">
           <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
             <Link href="/" className="text-xl font-bold">
-              FurTimes
+              獸時報 FurTimes
             </Link>
 
            <nav className="flex flex-wrap items-center gap-4 text-sm text-zinc-700">

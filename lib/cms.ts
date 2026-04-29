@@ -145,16 +145,39 @@ export async function getAnnouncements(limit = 5): Promise<CMSAnnouncement[]> {
   return data.docs
 }
 
-export async function getSponsors(limit = 100): Promise<CMSSponsor[]> {
-  const data = await fetchCMS<PayloadListResponse<CMSSponsor>>(
-    `/api/sponsors?depth=1&sort=tier&limit=${limit}`
-  )
-  return data.docs
+function compareSponsors(a: CMSSponsor, b: CMSSponsor) {
+  const tierRank: Record<CMSSponsor['tier'], number> = {
+    primary: 1,
+    secondary: 2,
+    standard: 3,
+    special: 4,
+    individual: 5,
+  }
+
+  const tierDiff = tierRank[a.tier] - tierRank[b.tier]
+  if (tierDiff !== 0) return tierDiff
+
+  return (a.sortOrder ?? 100) - (b.sortOrder ?? 100)
 }
 
-export async function getFeaturedSponsors(limit = 8): Promise<CMSSponsor[]> {
+export async function getSponsors(limit = 100): Promise<CMSSponsor[]> {
   const data = await fetchCMS<PayloadListResponse<CMSSponsor>>(
-    `/api/sponsors?where[featured][equals]=true&depth=1&limit=${limit}`
+    `/api/sponsors?depth=1&sort=sortOrder&limit=${limit}`
   )
+  return data.docs.sort(compareSponsors)
+}
+
+export async function getFeaturedSponsors(limit = 12): Promise<CMSSponsor[]> {
+  const data = await fetchCMS<PayloadListResponse<CMSSponsor>>(
+    `/api/sponsors?where[featured][equals]=true&depth=1&limit=100`
+  )
+
   return data.docs
+    .filter(
+      (sponsor) =>
+        sponsor.sponsorType === 'company' &&
+        ['primary', 'secondary', 'special'].includes(sponsor.tier)
+    )
+    .sort(compareSponsors)
+    .slice(0, limit)
 }

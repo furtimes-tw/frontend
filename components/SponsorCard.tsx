@@ -1,6 +1,13 @@
 import { CMSSponsor } from '@/types/cms'
 import { getMediaURL } from '@/lib/cms'
 
+type SponsorCardVariant =
+    | 'primary'
+    | 'secondary'
+    | 'standard'
+    | 'supporter'
+    | 'special'
+
 type Props = {
   sponsor: CMSSponsor
   compact?: boolean
@@ -22,25 +29,67 @@ export function getSponsorTierLabel(tier: CMSSponsor['tier']) {
       return '一般贊助'
     case 'supporter':
       return '個人贊助'
-	case 'special':
+    case 'special':
       return '特別贊助'
     default:
       return tier
   }
 }
 
-export default function SponsorCard({ sponsor, compact = false }: Props) {
+function getCardClass(variant: SponsorCardVariant) {
+  switch (variant) {
+    case 'primary':
+      return 'rounded-3xl border bg-white p-8 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md'
+    case 'secondary':
+      return 'rounded-2xl border bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md'
+    case 'standard':
+      return 'rounded-2xl border bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md'
+    case 'supporter':
+      return 'rounded-2xl border bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md'
+    case 'special':
+      return 'rounded-2xl border bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md'
+  }
+}
+
+function getLogoBoxClass(variant: SponsorCardVariant) {
+  switch (variant) {
+    case 'primary':
+      return 'mb-6 flex h-48 items-center justify-center rounded-2xl bg-zinc-50 p-8'
+    case 'secondary':
+      return 'mb-5 flex h-36 items-center justify-center rounded-xl bg-zinc-50 p-6'
+    case 'standard':
+      return 'mb-4 flex h-28 items-center justify-center rounded-xl bg-zinc-50 p-5'
+    case 'supporter':
+      return 'mb-3 flex h-20 items-center justify-center rounded-xl bg-zinc-50 p-4'
+    case 'special':
+      return 'mb-4 flex h-28 items-center justify-center rounded-xl bg-zinc-50 p-5'
+  }
+}
+
+function getTitleClass(variant: SponsorCardVariant) {
+  switch (variant) {
+    case 'primary':
+      return 'text-2xl font-bold'
+    case 'secondary':
+      return 'text-xl font-bold'
+    case 'standard':
+      return 'text-lg font-bold'
+    case 'supporter':
+      return 'text-base font-semibold'
+    case 'special':
+      return 'text-lg font-semibold'
+  }
+}
+
+export default function SponsorCard({
+  sponsor,
+  variant = 'standard',
+}: Props) {
   const logo = getLogo(sponsor)
 
   const card = (
-    <article className="flex h-full flex-col rounded-2xl border bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
-      <div
-        className={
-          compact
-            ? 'mb-4 flex h-24 items-center justify-center rounded-xl bg-zinc-50 p-4'
-            : 'mb-5 flex h-36 items-center justify-center rounded-xl bg-zinc-50 p-5'
-        }
-      >
+    <article className={`flex h-full flex-col ${getCardClass(variant)}`}>
+      <div className={getLogoBoxClass(variant)}>
         {logo?.url ? (
           <img
             src={getMediaURL(logo.url)}
@@ -56,9 +105,12 @@ export default function SponsorCard({ sponsor, compact = false }: Props) {
         {getSponsorTierLabel(sponsor.tier)}
       </div>
 
-      <h3 className="text-xl font-bold">{sponsor.name}</h3>
+      <h3 className={getTitleClass(variant)}>
+        {sponsor.name}
+      </h3>
 
-      {sponsor.description ? (
+      {sponsor.description &&
+      variant !== 'individual' ? (
         <p className="mt-3 line-clamp-3 text-sm leading-6 text-zinc-600">
           {sponsor.description}
         </p>
