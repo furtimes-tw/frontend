@@ -19,14 +19,14 @@ export default async function TagPage({
   const posts = await getPostsByTagSlug(slug, 24)
 
   return (
-    <main className="mx-auto max-w-6xl px-6 py-10">
+    <main className="mx-auto max-w-6xl px-5 py-10 sm:px-6 lg:px-8">
       <SectionHeading
         title={`#${tag.name}`}
         subtitle={`顯示所有帶有「${tag.name}」標籤的文章。`}
       />
 
       {posts.length === 0 ? (
-        <p>目前這個標籤沒有文章。</p>
+        <p className="text-ft-muted">目前這個標籤沒有文章。</p>
       ) : (
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {posts.map((post) => (

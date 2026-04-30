@@ -25,7 +25,13 @@ function getTags(post: CMSPost) {
 
   return post.tags.filter(
     (tag): tag is { id: number | string; name: string; slug: string } =>
-      typeof tag === 'object' && tag !== null && 'name' in tag && 'slug' in tag
+      typeof tag === 'object' &&
+      tag !== null &&
+      'id' in tag &&
+      'name' in tag &&
+      'slug' in tag &&
+      typeof tag.slug === 'string' &&
+      tag.slug.length > 0
   )
 }
 
@@ -48,19 +54,22 @@ export default async function PostPage({
     <main className="mx-auto max-w-5xl px-5 py-10 sm:px-6 lg:px-8">
       <article className="mx-auto max-w-3xl">
         <div className="mb-6">
-          <Link href="/" className="text-sm text-gray-600 hover:underline">
+          <Link
+            href="/"
+            className="text-sm font-medium text-ft-muted hover:text-ft-accent"
+          >
             ← 返回首頁
           </Link>
         </div>
 
-        <div className="mb-4 flex items-center gap-3 text-sm text-gray-600">
-          <span className="rounded bg-gray-100 px-2 py-1">
+        <div className="mb-4 flex items-center gap-3 text-sm text-ft-muted">
+          <span className="rounded-full border border-ft-accent-border bg-ft-accent-soft px-3 py-1 text-xs font-medium text-ft-accent">
             {getCategoryLabel(post.category)}
           </span>
           <time>{formatDate(post.publishedAt)}</time>
         </div>
 
-        <h1 className="mb-6 text-4xl font-bold leading-tight">
+        <h1 className="mb-6 text-4xl font-bold leading-tight tracking-tight text-ft-text">
           {post.title}
         </h1>
 
@@ -68,7 +77,7 @@ export default async function PostPage({
           <img
             src={getMediaURL(thumbnail.url)}
             alt={thumbnail.alt || post.title}
-            className="mb-8 h-72 w-full rounded-xl object-cover"
+            className="mb-8 h-72 w-full rounded-2xl border border-ft-border object-cover"
           />
         ) : null}
 
@@ -78,7 +87,7 @@ export default async function PostPage({
               <Link
                 key={tag.id}
                 href={`/tags/${tag.slug}`}
-                className="rounded-full bg-gray-100 px-3 py-1 text-sm hover:bg-gray-200"
+                className="rounded-full bg-ft-accent-soft px-3 py-1 text-sm text-ft-accent hover:bg-ft-accent hover:text-white"
               >
                 #{tag.name}
               </Link>

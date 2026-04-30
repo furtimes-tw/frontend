@@ -21,14 +21,14 @@ export default async function CategoryPage({
   const posts = await getPostsByCategory(category, 24)
 
   return (
-    <main className="mx-auto max-w-6xl px-6 py-10">
+    <main className="mx-auto max-w-6xl px-5 py-10 sm:px-6 lg:px-8">
       <SectionHeading
         title={`${getCategoryLabel(category)}分類`}
         subtitle={`顯示所有屬於「${getCategoryLabel(category)}」的文章。`}
       />
 
       {posts.length === 0 ? (
-        <p>目前這個分類沒有文章。</p>
+        <p className="text-ft-muted">目前這個分類沒有文章。</p>
       ) : (
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {posts.map((post) => (

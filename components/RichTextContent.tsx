@@ -13,37 +13,55 @@ type MediaValue = {
   credit?: string | null
 }
 
+function normalizeMediaURL(url: string) {
+  const cmsURL = process.env.NEXT_PUBLIC_CMS_URL
+
+  if (!cmsURL) return url
+
+  try {
+    const parsed = new URL(url)
+
+    if (parsed.hostname === 'localhost' || parsed.hostname === '127.0.0.1') {
+      return `${cmsURL}${parsed.pathname}`
+    }
+
+    return url
+  } catch {
+    if (url.startsWith('/')) return `${cmsURL}${url}`
+    return url
+  }
+}
+
 const jsxConverters: JSXConvertersFunction<DefaultNodeTypes> = ({
   defaultConverters,
 }) => ({
   ...defaultConverters,
 
   upload: ({ node }) => {
-    console.log('UPLOAD NODE:', node)
-
     const media = node.value as MediaValue | null | undefined
 
     if (!media || typeof media !== 'object') {
-      return <div className="my-4 rounded border p-4">圖片資料未展開</div>
+      return null
     }
 
     if (!media.url) {
-      return <div className="my-4 rounded border p-4">圖片缺少 URL</div>
+      return null
     }
 
     return (
       <figure className="my-8 flex flex-col items-center">
         <img
-          src={media.url}
+          src={normalizeMediaURL(media.url)}
           alt={media.alt ?? ''}
-          className="max-h-[520px] w-auto max-w-full rounded-lg border object-contain"
+          className="block max-h-[520px] w-auto max-w-full rounded-xl border border-ft-border object-contain"
         />
 
         {(media.caption || media.credit) && (
-          <figcaption className="mt-3 text-center text-sm text-gray-600">
+          <figcaption className="mt-3 text-center text-sm leading-6 text-ft-muted">
             {media.caption ? <div>{media.caption}</div> : null}
+
             {media.credit ? (
-              <div className="mt-1 text-xs text-gray-500">
+              <div className="mt-1 text-xs text-ft-subtle">
                 圖片來源：{media.credit}
               </div>
             ) : null}
@@ -59,10 +77,12 @@ export default function RichTextContent({
 }: {
   content: SerializedEditorState | null | undefined
 }) {
-  if (!content) return <p>無內容</p>
+  if (!content) {
+    return <p className="text-ft-muted">無內容</p>
+  }
 
   return (
-    <div className="prose prose-neutral max-w-none">
+    <div className="prose prose-neutral max-w-none text-ft-text prose-p:leading-8 prose-a:text-ft-accent prose-a:underline-offset-4 prose-strong:text-ft-text prose-blockquote:border-ft-accent prose-blockquote:text-ft-muted">
       <RichText data={content} converters={jsxConverters} />
     </div>
   )

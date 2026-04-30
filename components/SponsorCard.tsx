@@ -39,30 +39,30 @@ export function getSponsorTierLabel(tier: CMSSponsor['tier']) {
 function getCardClass(variant: SponsorCardVariant) {
   switch (variant) {
     case 'primary':
-      return 'rounded-3xl border bg-white p-8 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md'
+      return 'rounded-3xl border border-ft-border bg-ft-card p-8 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md'
     case 'secondary':
-      return 'rounded-2xl border bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md'
+      return 'rounded-2xl border border-ft-border bg-ft-card p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md'
     case 'standard':
-      return 'rounded-2xl border bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md'
+      return 'rounded-2xl border border-ft-border bg-ft-card p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md'
     case 'supporter':
-      return 'rounded-2xl border bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md'
+      return 'rounded-2xl border border-ft-border bg-ft-card p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md'
     case 'special':
-      return 'rounded-2xl border bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md'
+      return 'rounded-2xl border border-ft-border bg-ft-card p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md'
   }
 }
 
 function getLogoBoxClass(variant: SponsorCardVariant) {
   switch (variant) {
     case 'primary':
-      return 'mb-6 flex h-48 items-center justify-center rounded-2xl bg-zinc-50 p-8'
+      return 'mb-6 flex h-48 items-center justify-center rounded-2xl bg-ft-bg p-8'
     case 'secondary':
-      return 'mb-5 flex h-36 items-center justify-center rounded-xl bg-zinc-50 p-6'
+      return 'mb-5 flex h-36 items-center justify-center rounded-xl bg-ft-bg p-6'
     case 'standard':
-      return 'mb-4 flex h-28 items-center justify-center rounded-xl bg-zinc-50 p-5'
+      return 'mb-4 flex h-28 items-center justify-center rounded-xl bg-ft-bg p-5'
     case 'supporter':
-      return 'mb-3 flex h-20 items-center justify-center rounded-xl bg-zinc-50 p-4'
+      return 'mb-3 flex h-20 items-center justify-center rounded-xl bg-ft-bg p-4'
     case 'special':
-      return 'mb-4 flex h-28 items-center justify-center rounded-xl bg-zinc-50 p-5'
+      return 'mb-4 flex h-28 items-center justify-center rounded-xl bg-ft-bg p-5'
   }
 }
 
@@ -101,7 +101,7 @@ export default function SponsorCard({
         )}
       </div>
 
-      <div className="mb-2 text-sm font-medium text-zinc-500">
+      <div className="mb-2 text-sm font-medium text-ft-accent">
         {getSponsorTierLabel(sponsor.tier)}
       </div>
 
@@ -111,7 +111,7 @@ export default function SponsorCard({
 
       {sponsor.description &&
       variant !== 'individual' ? (
-        <p className="mt-3 line-clamp-3 text-sm leading-6 text-zinc-600">
+        <p className="mt-3 line-clamp-3 text-sm leading-6 text-ft-muted">
           {sponsor.description}
         </p>
       ) : null}

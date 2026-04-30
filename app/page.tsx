@@ -67,7 +67,7 @@ export default async function HomePage() {
                   <div className="mt-5">
                     <Link
                       href={`/posts/${heroPost.slug}`}
-                      className="inline-flex rounded-xl bg-zinc-900 px-5 py-3 text-sm font-medium text-white hover:bg-zinc-700"
+                      className="inline-flex rounded-full bg-ft-accent px-5 py-3 text-sm font-semibold text-white shadow-[0_8px_20px_rgba(40,129,159,0.35)] transition hover:-translate-y-0.5 hover:bg-ft-accent-dark hover:shadow-[0_12px_26px_rgba(40,129,159,0.45)]"
                     >
                       閱讀推薦報導
                     </Link>
@@ -177,7 +177,7 @@ export default async function HomePage() {
         <div className="mt-6">
           <Link
             href="/posts"
-            className="inline-flex rounded-lg border bg-white px-4 py-2 text-sm hover:bg-zinc-50"
+            className="inline-flex rounded-full border border-ft-border bg-ft-card px-5 py-3 text-sm font-medium text-ft-muted transition hover:-translate-y-0.5 hover:bg-ft-accent-border hover:bg-ft-accent-soft hover:text-ft-text"
           >
             查看所有文章
           </Link>

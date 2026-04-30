@@ -21,16 +21,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-Hant">
-      <body className="bg-zinc-50 text-zinc-900">
-        <header className="border-b bg-white">
-          <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
-            <Link href="/" className="text-xl font-bold">
+      <body className="bg-ft-bg text-ft-text">
+        <header className="sticky top-0 z-50 border-b border-ft-border bg-ft-card/90 backdrop-blur">
+          <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-6 lg:px-8">
+            <Link href="/" className="text-xl font-bold tracking-tight text-ft-text">
               獸時報 FurTimes
             </Link>
 
-           <nav className="flex flex-wrap items-center gap-4 text-sm text-zinc-700">
+           <nav className="flex flex-wrap items-center gap-4 text-sm text-ft-muted">
              {navItems.map((item) => (
-               <Link key={item.href} href={item.href} className="hover:text-zinc-950">
+               <Link key={item.href} href={item.href} className="hover:text-ft-accent">
                  {item.label}
                </Link>
              ))}

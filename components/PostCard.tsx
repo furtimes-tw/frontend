@@ -26,7 +26,7 @@ export default function PostCard({ post }: Props) {
   const tags = getTags(post)
 
   return (
-    <article className="overflow-hidden rounded-xl border bg-white shadow-sm">
+    <article className="overflow-hidden rounded-xl border border-ft-border bg-ft-card shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
       {thumbnail?.url ? (
         <img
           src={getMediaURL(thumbnail.url)}
@@ -39,11 +39,11 @@ export default function PostCard({ post }: Props) {
         <div className="mb-3 flex items-center gap-3 text-sm text-gray-600">
           <Link
             href={`/category/${post.category}`}
-            className="rounded bg-gray-100 px-2 py-1 hover:bg-gray-200"
+            className="rounded-full border border-ft-accent-border bg-ft-accent-soft px-3 py-1 text-xs font-medium text-ft-accent hover:bg-ft-accent hover:text-white"
           >
             {getCategoryLabel(post.category)}
           </Link>
-          <time>{formatDate(post.publishedAt)}</time>
+          <time className="text-ft-subtle">{formatDate(post.publishedAt)}</time>
         </div>
 
         <h3 className="mb-3 text-xl font-semibold leading-snug">
@@ -58,7 +58,7 @@ export default function PostCard({ post }: Props) {
               <Link
                 key={tag.id}
                 href={`/tags/${tag.slug}`}
-                className="rounded-full bg-gray-100 px-3 py-1 text-sm hover:bg-gray-200"
+                className="rounded-full bg-ft-accent-soft px-3 py-1 text-sm text-ft-accent hover:bg-ft-accent hover:text-white"
               >
                 #{tag.name}
               </Link>
