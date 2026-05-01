@@ -97,7 +97,7 @@ export default function SponsorCard({
             className="max-h-full max-w-full object-contain"
           />
         ) : (
-          <span className="text-zinc-400">{sponsor.name}</span>
+          <span className="text-ft-subtle">{sponsor.name}</span>
         )}
       </div>
 
