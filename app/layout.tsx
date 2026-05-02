@@ -2,6 +2,7 @@ import "./globals.css";
 import Link from "next/link";
 import Script from 'next/script';
 import ThemeToggle from '@/components/ThemeToggle'
+import Footer from '@/components/Footer'
 
 export const metadata = {
   title: "獸時報 FurTimes",
@@ -58,6 +59,7 @@ export default function RootLayout({
         </header>
 
         {children}
+        <Footer />
       </body>
     </html>
   );
