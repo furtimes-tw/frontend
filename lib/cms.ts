@@ -6,21 +6,14 @@ import {
   CMSTag,
   PayloadListResponse,
 } from '@/types/cms'
+import { getCMSURL, normalizeMediaURL } from '@/lib/site'
 
-const CMS_URL = process.env.NEXT_PUBLIC_CMS_URL
-
-if (!CMS_URL) {
-  throw new Error('Missing NEXT_PUBLIC_CMS_URL in environment variables')
+funtion buildURL(path: string) {
+  return getCMSURL(path)
 }
 
-function buildURL(path: string) {
-  return `${CMS_URL}${path}`
-}
-
-export function getMediaURL(path?: string | null) {
-  if (!path) return ''
-  if (path.startsWith('http://') || path.startsWith('https://')) return path
-  return `${CMS_URL}${path}`
+export function getMediaURL(path: string || null)  {
+  return path ? normalizeMediaURL(path)
 }
 
 export function getCategoryLabel(category: CMSPostCategory) {
@@ -55,7 +48,9 @@ export function formatDate(dateString?: string | null) {
 }
 
 async function fetchCMS<T>(path: string, revalidate = 60): Promise<T> {
-  const res = await fetch(buildURL(path), {
+  const url = buildURL(path)
+
+  const res = await fetch(url, {
     next: { revalidate },
   })
 

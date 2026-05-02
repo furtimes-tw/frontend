@@ -3,6 +3,7 @@ import {
   RichText,
   type JSXConvertersFunction,
 } from '@payloadcms/richtext-lexical/react'
+import { normalizeMediaURL } from '@/lib/site'
 import type { DefaultNodeTypes } from '@payloadcms/richtext-lexical'
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 
@@ -11,25 +12,6 @@ type MediaValue = {
   alt?: string | null
   caption?: string | null
   credit?: string | null
-}
-
-function normalizeMediaURL(url: string) {
-  const cmsURL = process.env.NEXT_PUBLIC_CMS_URL
-
-  if (!cmsURL) return url
-
-  try {
-    const parsed = new URL(url)
-
-    if (parsed.hostname === 'localhost' || parsed.hostname === '127.0.0.1') {
-      return `${cmsURL}${parsed.pathname}`
-    }
-
-    return url
-  } catch {
-    if (url.startsWith('/')) return `${cmsURL}${url}`
-    return url
-  }
 }
 
 const jsxConverters: JSXConvertersFunction<DefaultNodeTypes> = ({
