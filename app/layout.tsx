@@ -1,20 +1,11 @@
 import "./globals.css";
 import type { Metadata } from 'next';
-import Link from "next/link";
 import Script from 'next/script';
-import ThemeToggle from '@/components/ThemeToggle'
+import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import { buildMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = buildMetadata()
-
-const navItems = [
-  { href: '/', label: '首頁' },
-  { href: '/posts', label: '文章' },
-  { href: '/category/Newsflash', label: '快訊' },
-  { href: '/announcements', label: '公告' },
-  { href: '/sponsors', label: '贊助' },
-]
 
 export default function RootLayout({
   children,
@@ -37,27 +28,10 @@ export default function RootLayout({
             `}
         </Script>
 
-        <header className="sticky top-0 z-50 border-b border-ft-border bg-ft-card/90 backdrop-blur">
-          <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-6 lg:px-8">
-            <Link href="/" className="text-xl font-bold tracking-tight text-ft-text">
-              獸時報 FurTimes
-            </Link>
-
-            <div className="flex items-center gap-5">
-              <nav className="flex flex-wrap items-center gap-4 text-sm text-ft-muted">
-                {navItems.map((item) => (
-                  <Link key={item.href} href={item.href} className="hover:text-ft-accent">
-                    {item.label}
-                  </Link>
-                ))}
-              </nav>
-
-              <ThemeToggle />
-            </div>
-          </div>
-        </header>
+        <Navbar />
 
         {children}
+
         <Footer />
       </body>
     </html>
