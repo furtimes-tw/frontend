@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import PostCard from '@/components/PostCard'
 import SectionHeading from '@/components/SectionHeading'
+import EmtyState from '@/components/EmptyState'
 import {
   getCategoryLabel,
   getPostsByCategory,
@@ -54,9 +55,14 @@ export default async function CategoryPage({
       />
 
       {posts.length === 0 ? (
-        <p className="text-ft-muted">目前這個分類沒有文章。</p>
+        <EmtyState
+          title="沒有找到文章"
+          description="目前沒有屬於這個分類的文章。"
+          actionHref="/posts"
+          actionLabel="瀏覽所有文章"
+        />
       ) : (
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {posts.map((post) => (
             <PostCard key={post.id} post={post} />
           ))}

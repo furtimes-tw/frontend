@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import SectionHeading from '@/components/SectionHeading'
 import RichTextContent from '@/components/RichTextContent'
+import EmptyState from '@/components/EmptyState'
 import { formatDate, getAnnouncements } from '@/lib/cms'
 import { buildMetadata } from '@/lib/seo'
 
@@ -22,7 +23,12 @@ export default async function AnnouncementsPage() {
       />
 
       {announcements.length === 0 ? (
-        <p className="text-ft-muted">目前沒有公告。</p>
+        <EmptyState
+            title="目前沒有公告"
+            description="目前沒有任何公告。"
+            actionHref="/"
+            actionLabel="返回首頁"
+        />
       ) : (
         <div className="space-y-6">
           {announcements.map((item) => (

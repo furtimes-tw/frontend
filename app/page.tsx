@@ -3,6 +3,7 @@ import Link from 'next/link'
 import PostCard from '@/components/PostCard'
 import SectionHeading from '@/components/SectionHeading'
 import SponsorCard from '@/components/SponsorCard'
+import EmptyState from '@/components/EmptyState'
 import {
     formatDate,
     getAnnouncements,
@@ -250,9 +251,12 @@ export default async function HomePage() {
         />
 
         {featuredSponsors.length === 0 ? (
-          <p className="text-ft-muted">
-            目前沒有首頁可顯示的贊助商資料。
-          </p>
+          <EmptyState
+            title="目前沒有贊助夥伴"
+            description="我們正在積極尋找贊助夥伴，如有興趣歡迎與我們洽談！"
+            actionHref="/sponsors"
+            actionLabel="了解如何贊助"
+          />
         ) : (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {featuredSponsors.map((sponsor) => (

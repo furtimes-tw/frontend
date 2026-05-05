@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import PostCard from '@/components/PostCard'
 import SectionHeading from '@/components/SectionHeading'
+import EmptyState from '@/components/EmptyState'
 import { getPostsByTagSlug, getTagBySlug } from '@/lib/cms'
 import { buildMetadata } from '@/lib/seo'
 
@@ -51,7 +52,12 @@ export default async function TagPage({
       />
 
       {posts.length === 0 ? (
-        <p className="text-ft-muted">目前這個標籤沒有文章。</p>
+        <EmptyState
+          title="沒有找到文章"
+          description={`目前沒有這個標籤的文章。`}
+          actionHref="/posts"
+          actionLabel="瀏覽所有文章"
+        />
       ) : (
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {posts.map((post) => (
