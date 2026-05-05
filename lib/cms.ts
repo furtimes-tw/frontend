@@ -8,12 +8,12 @@ import {
 } from '@/types/cms'
 import { getCMSURL, normalizeMediaURL } from '@/lib/site'
 
-funtion buildURL(path: string) {
+function buildURL(path: string) {
   return getCMSURL(path)
 }
 
-export function getMediaURL(path: string || null)  {
-  return path ? normalizeMediaURL(path)
+export function getMediaURL(path?: string | null)  {
+  return normalizeMediaURL(path)
 }
 
 export function getCategoryLabel(category: CMSPostCategory) {
