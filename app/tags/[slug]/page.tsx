@@ -1,7 +1,32 @@
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import PostCard from '@/components/PostCard'
 import SectionHeading from '@/components/SectionHeading'
 import { getPostsByTagSlug, getTagBySlug } from '@/lib/cms'
+import { buildMetadata } from '@/lib/seo'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  const { slug } = await params
+  const tag = await getTagBySlug(slug)
+
+  if (!tag) {
+    return buildMetadata({
+      title: '標籤',
+      description: '依照標籤瀏覽文章。',
+      path: `/tags/${slug}`,
+    })
+  }
+
+  return buildMetadata({
+    title: `#${tag.name}`,
+    description: `瀏覽所有帶有「${tag.name}」標籤的文章。`,
+    path: `/tags/${tag.slug}`,
+  })
+}
 
 export default async function TagPage({
   params,

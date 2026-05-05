@@ -1,8 +1,11 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getPostBySlug, getCategoryLabel, getMediaURL } from '@/lib/cms'
 import { CMSPost } from '@/types/cms'
 import RichTextContent from '@/components/RichTextContent'
+import { buildMetadata } from '@/lib/seo'
+import { normalizeMediaURL } from '@/lib/site'
 
 function formatDate(dateString?: string | null) {
   if (!dateString) return '未設定發布時間'
@@ -12,6 +15,47 @@ function formatDate(dateString?: string | null) {
     month: '2-digit',
     day: '2-digit',
   }).format(new Date(dateString))
+}
+
+function getPostDescription(post: CMSPost) {
+  const content = post.content as any
+  const children = content?.root?.children
+
+  if (!Array.isArray(children)) {
+    return undefined
+  }
+
+  const texts: string[] = []
+
+  function walk(node: any) {
+    if (!node) return
+
+    if (typeof node.text === 'string') {
+      texts.push(node.text)
+    }
+
+    if (Array.isArray(node.children)) {
+      node.children.forEach(walk)
+    }
+  }
+
+  children.forEach(walk)
+
+  const text = texts.join(' ').replace(/\s+/g, ' ').trim()
+
+  if (!text) return undefined
+
+  return text.length > 120 ? `${text.slice(0, 120)}…` : text
+}
+
+function getPostImage(post: CMSPost) {
+  const thumbnail = getThumbnail(post)
+
+  if (thumbnail?.url) {
+    return normalizeMediaURL(thumbnail.url)
+  }
+
+  return null
 }
 
 function getThumbnail(post: CMSPost) {
@@ -33,6 +77,36 @@ function getTags(post: CMSPost) {
       typeof tag.slug === 'string' &&
       tag.slug.length > 0
   )
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  const { slug } = await params
+  const post = await getPostBySlug(slug)
+
+  if (!post) {
+    return buildMetadata({
+      title: '找不到文章',
+      description: '找不到這篇文章，可能已被移除或尚未發布。',
+      path: `/posts/${slug}`,
+    })
+  }
+
+  const tags = getTags(post).map((tag) => tag.name)
+
+  return buildMetadata({
+    title: post.title,
+    description: getPostDescription(post),
+    path: `/posts/${post.slug}`,
+    image: getPostImage(post),
+    type: 'article',
+    publishedTime: post.publishedAt,
+    modifiedTime: post.updatedAt,
+    tags,
+  })
 }
 
 export default async function PostPage({

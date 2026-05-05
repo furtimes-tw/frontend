@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import PostCard from '@/components/PostCard'
 import SectionHeading from '@/components/SectionHeading'
@@ -6,6 +7,31 @@ import {
   getPostsByCategory,
   isValidCategory,
 } from '@/lib/cms'
+import { buildMetadata } from '@/lib/seo'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ category: string }>
+}): Promise<Metadata> {
+  const { category } = await params
+
+  if (!isValidCategory(category)) {
+    return buildMetadata({
+      title: '分類',
+      description: '依照分類瀏覽文章。',
+      path: `/category/${category}`,
+    })
+  }
+
+  const label = getCategoryLabel(category)
+
+  return buildMetadata({
+    title: `${label}分類`,
+    description: `瀏覽所有屬於「${label}」分類的文章。`,
+    path: `/category/${category}`,
+  })
+}
 
 export default async function CategoryPage({
   params,

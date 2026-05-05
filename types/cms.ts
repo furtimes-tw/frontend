@@ -24,6 +24,8 @@ export type CMSPost = {
   slug: string
   category: CMSPostCategory
   publishedAt?: string | null
+  updatedAt?: string | null
+  createdAt?: string | null
   content?: unknown
   thumbnail?: CMSMedia | number | string | null
   tags?: CMSTag[] | (number | string)[] | null
@@ -36,6 +38,8 @@ export type CMSAnnouncement = {
   body?: unknown
   pinned?: boolean
   publishedAt?: string | null
+  updatedAt?: string | null
+  createdAt?: string | null
 }
 
 export type CMSSponsor = {

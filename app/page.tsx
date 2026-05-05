@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import PostCard from '@/components/PostCard'
 import SectionHeading from '@/components/SectionHeading'
@@ -10,6 +11,13 @@ import {
     getLatestReports,
     getMediaURL,
 } from '@/lib/cms'
+import { buildMetadata } from '@/lib/seo'
+
+export const metadata: Metadata = buildMetadata({
+  description:
+    '獸時報 FurTimes 聚焦獸文化活動、創作、社群與相關產業消息，整理值得被看見的故事。',
+  path: '/',
+})
 
 function getThumbnail(post: any) {
     if (!post.thumbnail || typeof post.thumbnail !== 'object') return null

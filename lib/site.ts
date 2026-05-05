@@ -1,4 +1,5 @@
 export const SITE_NAME = 'FurTimes'
+export const SITE_TITLE = '獸時報 FurTimes'
 export const SITE_DESCRIPTION = '獸時報新聞網'
 
 export const SITE_URL =
@@ -9,7 +10,7 @@ export const CMS_URL =
   process.env.NEXT_PUBLIC_CMS_URL?.replace(/\/$/, '') ||
   'http://localhost:3001'
 
-export function getSiteUrl(path = '') {
+export function getSiteURL(path = '') {
   if (!path) return SITE_URL
   return `${SITE_URL}/${path.startsWith('/') ? path : `/${path}`}`
 }

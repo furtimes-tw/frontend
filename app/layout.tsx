@@ -1,13 +1,12 @@
 import "./globals.css";
+import type { Metadata } from 'next';
 import Link from "next/link";
 import Script from 'next/script';
 import ThemeToggle from '@/components/ThemeToggle'
 import Footer from '@/components/Footer'
+import { buildMetadata } from '@/lib/seo';
 
-export const metadata = {
-  title: "獸時報 FurTimes",
-  description: "獸時報新聞網",
-};
+export const metadata: Metadata = buildMetadata()
 
 const navItems = [
   { href: '/', label: '首頁' },

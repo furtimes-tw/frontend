@@ -1,6 +1,8 @@
+import type { Metadata } from 'next'
 import SponsorCard from '@/components/SponsorCard'
 import SectionHeading from '@/components/SectionHeading'
 import { getSponsors } from '@/lib/cms'
+import { buildMetadata } from '@/lib/seo'
 
 type SponsorVariant =
   | 'primary'
@@ -8,6 +10,13 @@ type SponsorVariant =
   | 'standard'
   | 'individual'
   | 'special'
+
+export const metadata: Metadata = buildMetadata({
+  title: '贊助與合作',
+  description:
+    '感謝支持獸時報與獸文化內容發展的贊助夥伴。歡迎廠商、組織與個人以不同形式支持內容產出。',
+  path: '/sponsors',
+})
 
 export default async function SponsorsPage() {
   const sponsors = await getSponsors(100)

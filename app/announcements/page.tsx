@@ -1,7 +1,15 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import SectionHeading from '@/components/SectionHeading'
 import RichTextContent from '@/components/RichTextContent'
 import { formatDate, getAnnouncements } from '@/lib/cms'
+import { buildMetadata } from '@/lib/seo'
+
+export const metadata: Metadata = buildMetadata({
+  title: '公告',
+  description: '最新站務與活動公告。',
+  path: '/announcements',
+})
 
 export default async function AnnouncementsPage() {
   const announcements = await getAnnouncements(30)
