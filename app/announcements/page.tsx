@@ -19,7 +19,6 @@ export default async function AnnouncementsPage() {
     <main className="mx-auto max-w-5xl px-5 py-10 sm:px-6 lg:px-8">
       <SectionHeading
         title="公告"
-        subtitle="最新站務與活動公告。"
       />
 
       {announcements.length === 0 ? (

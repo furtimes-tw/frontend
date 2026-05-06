@@ -133,7 +133,7 @@ export default async function HomePage() {
                 <h2 className="text-xl font-bold">公告</h2>
                 <Link
                   href="/announcements"
-                  className="text-sm text-ft-subtle hover:text-ft-accent"
+                  className="text-sm text-ft-muted hover:text-ft-accent"
                 >
                   更多
                 </Link>
@@ -171,7 +171,7 @@ export default async function HomePage() {
       </section>
 
       <section className="mx-auto max-w-6xl px-5 py-12 sm:px-6 lg:px-8">
-        <SectionHeading title="最新報導" subtitle="近期發布的主要文章。" />
+        <SectionHeading title="最新報導"  />
 
         {secondaryReports.length === 0 ? (
           <p className="text-ft-muted">目前沒有更多報導文章。</p>
@@ -197,7 +197,6 @@ export default async function HomePage() {
         <div className="mx-auto max-w-6xl px-5 py-12 sm:px-6 lg:px-8">
           <SectionHeading
             title="探索內容分類"
-            subtitle="依照文章類型瀏覽內容。"
           />
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -247,7 +246,6 @@ export default async function HomePage() {
       <section className="mx-auto max-w-6xl px-5 py-12 sm:px-6 lg:px-8">
         <SectionHeading
           title="贊助夥伴"
-          subtitle="支持獸時報的主要合作夥伴。"
         />
 
         {featuredSponsors.length === 0 ? (

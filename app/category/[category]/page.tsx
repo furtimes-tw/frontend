@@ -51,7 +51,6 @@ export default async function CategoryPage({
     <main className="mx-auto max-w-6xl px-5 py-10 sm:px-6 lg:px-8">
       <SectionHeading
         title={`${getCategoryLabel(category)}分類`}
-        subtitle={`顯示所有屬於「${getCategoryLabel(category)}」的文章。`}
       />
 
       {posts.length === 0 ? (
