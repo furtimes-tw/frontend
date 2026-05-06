@@ -76,7 +76,7 @@ export default async function HomePage() {
             <div className="mt-5">
             <Link
             href={`/posts/${heroPost.slug}`}
-            className="inline-flex rounded-full bg-ft-accent px-5 py-3 text-sm font-semibold text-white shadow-[0_8px_20px_rgba(40,129,159,0.35)] transition hover:-translate-y-0.5 hover:bg-ft-accent-dark hover:shadow-[0_12px_26px_rgba(40,129,159,0.45)]"
+            className="inline-flex rounded-full bg-ft-brand px-5 py-3 text-sm font-semibold text-white shadow-[0_8px_20px_rgba(40,129,159,0.35)] transition hover:-translate-y-0.5 hover:bg-ft-brand-dark hover:shadow-[0_12px_26px_rgba(40,129,159,0.45)]"
             >
             閱讀推薦報導
             </Link>

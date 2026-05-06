@@ -1,11 +1,14 @@
 @import "tailwindcss";
 
 @theme {
-  --color-ft-accent: #28819f;
-  --color-ft-accent-dark: #1f6a83;
-  --color-ft-accent-light: #36a3c5;
-  --color-ft-accent-soft: rgba(40, 129, 159, 0.1);
-  --color-ft-accent-border: rgba(40, 129, 159, 0.24);
+  --color-ft-brand: #28819f;
+  --color-ft-brand-dark: #1f6a83;
+
+  --color-ft-accent: #59b5d4;
+  --color-ft-accent-dark: #28819f;
+  --color-ft-accent-light: #7cc9e3;
+  --color-ft-accent-soft: rgba(89, 181, 212, 0.14);
+  --color-ft-accent-border: rgba(89, 181, 212, 0.36);
 
   --color-ft-bg: #eef1f3;
   --color-ft-card: #fbfcfd;
@@ -19,11 +22,14 @@
 }
 
 :root {
-  --color-ft-accent: #28819f;
-  --color-ft-accent-dark: #1f6a83;
-  --color-ft-accent-light: #36a3c5;
-  --color-ft-accent-soft: rgba(40, 129, 159, 0.1);
-  --color-ft-accent-border: rgba(40, 129, 159, 0.24);
+  --color-ft-brand: #28819f;
+  --color-ft-brand-dark: #1f6a83;
+
+  --color-ft-accent: #59b5d4;
+  --color-ft-accent-dark: #28819f;
+  --color-ft-accent-light: #7cc9e3;
+  --color-ft-accent-soft: rgba(89, 181, 212, 0.14);
+  --color-ft-accent-border: rgba(89, 181, 212, 0.36);
 
   --color-ft-bg: #eef1f3;
   --color-ft-card: #fbfcfd;
@@ -47,11 +53,14 @@ html[data-theme='dark'] {
 
   --color-ft-border: #666666;
 
-  --color-ft-accent: #28819f;
-  --color-ft-accent-dark: #36a3c5;
-  --color-ft-accent-light: #5fc0dc;
-  --color-ft-accent-soft: rgba(40, 129, 159, 0.2);
-  --color-ft-accent-border: rgba(95, 192, 220, 0.35);
+  --color-ft-brand: #28819f;
+  --color-ft-brand-dark: #36a3c5;
+
+  --color-ft-accent: #59b5d4;
+  --color-ft-accent-dark: #7cc9e3;
+  --color-ft-accent-light: #a3ddf0;
+  --color-ft-accent-soft: rgba(89, 181, 212, 0.18);
+  --color-ft-accent-border: rgba(89, 181, 212, 0.48);
 }
 
 html,

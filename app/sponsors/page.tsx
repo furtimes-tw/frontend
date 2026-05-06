@@ -65,7 +65,7 @@ export default async function SponsorsPage() {
         <div className="mt-6 flex flex-wrap gap-3">
           <a
             href="#"
-            className="rounded-full bg-ft-accent px-5 py-3 text-sm font-semibold text-white shadow-[0_8px_20px_rgba(40,129,159,0.35)] transition hover:-translate-y-0.5 hover:bg-ft-accent-dark hover:shadow-[0_12px_26px_rgba(40,129,159,0.45)]"
+            className="rounded-full bg-ft-brand px-5 py-3 text-sm font-semibold text-white shadow-[0_8px_20px_rgba(40,129,159,0.35)] transition hover:-translate-y-0.5 hover:bg-ft-brand-dark hover:shadow-[0_12px_26px_rgba(40,129,159,0.45)]"
           >
             我要贊助
           </a>
