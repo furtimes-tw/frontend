@@ -75,3 +75,198 @@ body {
     "Segoe UI",
     sans-serif;
 }
+
+.rich-text {
+  color: var(--color-ft-text);
+  font-size: 1.0625rem;
+  line-height: 1.85;
+}
+
+.rich-text > * + * {
+  margin-top: 1.15rem;
+}
+
+.rich-text p {
+  margin: 0;
+  color: var(--color-ft-text);
+}
+
+.rich-text h1,
+.rich-text h2,
+.rich-text h3,
+.rich-text h4,
+.rich-text h5,
+.rich-text h6 {
+  color: var(--color-ft-text);
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+}
+
+.rich-text h1 {
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  font-size: clamp(2rem, 4vw, 2.75rem);
+}
+
+.rich-text h2 {
+  margin-top: 2.25rem;
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--color-ft-border);
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+}
+
+.rich-text h3 {
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  font-size: clamp(1.3rem, 2.4vw, 1.65rem);
+}
+
+.rich-text h4 {
+  margin-top: 1.7rem;
+  margin-bottom: 0.6rem;
+  font-size: 1.2rem;
+}
+
+.rich-text h5,
+.rich-text h6 {
+  margin-top: 1.4rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.05rem;
+}
+
+.rich-text strong {
+  color: var(--color-ft-text);
+  font-weight: 700;
+}
+
+.rich-text em {
+  font-style: italic;
+}
+
+.rich-text u {
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+}
+
+.rich-text s,
+.rich-text del {
+  text-decoration: line-through;
+}
+
+.rich-text a {
+  color: var(--color-ft-accent);
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+}
+
+.rich-text a:hover {
+  color: var(--color-ft-accent-dark);
+}
+
+.rich-text ul,
+.rich-text ol {
+  margin: 1.15rem 0;
+  padding-left: 1.5rem;
+}
+
+.rich-text ul {
+  list-style: disc;
+}
+
+.rich-text ol {
+  list-style: decimal;
+}
+
+.rich-text li {
+  margin: 0.35rem 0;
+  padding-left: 0.25rem;
+}
+
+.rich-text li > p {
+  margin: 0;
+}
+
+.rich-text blockquote {
+  margin: 1.5rem 0;
+  padding: 0.8rem 1rem;
+  border-left: 4px solid var(--color-ft-accent);
+  border-radius: 0.75rem;
+  background: var(--color-ft-accent-soft);
+  color: var(--color-ft-muted);
+}
+
+.rich-text blockquote > *:first-child {
+  margin-top: 0;
+}
+
+.rich-text blockquote > *:last-child {
+  margin-bottom: 0;
+}
+
+.rich-text code {
+  border-radius: 0.35rem;
+  background: var(--color-ft-surface);
+  padding: 0.15rem 0.35rem;
+  color: var(--color-ft-accent);
+  font-size: 0.92em;
+}
+
+.rich-text pre {
+  overflow-x: auto;
+  border: 1px solid var(--color-ft-border);
+  border-radius: 1rem;
+  background: var(--color-ft-surface);
+  padding: 1rem;
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.rich-text pre code {
+  background: transparent;
+  padding: 0;
+  color: var(--color-ft-text);
+}
+
+.rich-text hr {
+  margin: 2rem 0;
+  border: 0;
+  border-top: 1px solid var(--color-ft-border);
+}
+
+.rich-text figure {
+  margin: 2rem 0;
+}
+
+.rich-text figcaption {
+  color: var(--color-ft-muted);
+}
+
+.rich-text img {
+  max-width: 100%;
+}
+
+.rich-text table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  overflow: hidden;
+  border: 1px solid var(--color-ft-border);
+  border-radius: 0.75rem;
+}
+
+.rich-text th,
+.rich-text td {
+  border: 1px solid var(--color-ft-border);
+  padding: 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.rich-text th {
+  background: var(--color-ft-surface);
+  font-weight: 700;
+}

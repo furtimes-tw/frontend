@@ -19,6 +19,83 @@ const jsxConverters: JSXConvertersFunction<DefaultNodeTypes> = ({
 }) => ({
   ...defaultConverters,
 
+  heading: ({ node, nodesToJSX }) => {
+    const Tag = node.tag || 'h2'
+
+    if (
+      Tag !== 'h1' &&
+      Tag !== 'h2' &&
+      Tag !== 'h3' &&
+      Tag !== 'h4' &&
+      Tag !== 'h5' &&
+      Tag !== 'h6'
+    ) {
+      return <h2>{nodesToJSX({ nodes: node.children })}</h2>
+    }
+
+    const children = nodesToJSX({ nodes: node.children })
+
+    switch (Tag) {
+      case 'h1':
+        return <h1>{children}</h1>
+      case 'h2':
+        return <h2>{children}</h2>
+      case 'h3':
+        return <h3>{children}</h3>
+      case 'h4':
+        return <h4>{children}</h4>
+      case 'h5':
+        return <h5>{children}</h5>
+      case 'h6':
+        return <h6>{children}</h6>
+    }
+  },
+
+  list: ({ node, nodesToJSX }) => {
+    const children = nodesToJSX({ nodes: node.children })
+
+    if (node.listType === 'number' || node.tag === 'ol') {
+      return <ol>{children}</ol>
+    }
+
+    return <ul>{children}</ul>
+  },
+
+  listitem: ({ node, nodesToJSX }) => {
+    return <li>{nodesToJSX({ nodes: node.children })}</li>
+  },
+
+  quote: ({ node, nodesToJSX }) => {
+    return <blockquote>{nodesToJSX({ nodes: node.children })}</blockquote>
+  },
+
+  link: ({ node, nodesToJSX }) => {
+    const rawURL = node.fields?.url || '#'
+
+    let href = rawURL
+
+    try {
+      href = decodeURIComponent(rawURL)
+    } catch {
+      href = rawURL
+    }
+
+    const isExternal =
+      href.startsWith('http://') ||
+      href.startsWith('https://') ||
+      href.startsWith('mailto:')
+
+    return (
+      <a
+        href={href}
+        target={node.fields?.newTab ? '_blank' : undefined}
+        rel={node.fields?.newTab || isExternal ? 'noopener noreferrer' : undefined}
+      >
+        {nodesToJSX({ nodes: node.children })}
+      </a>
+    )
+  },
+
   upload: ({ node }) => {
     const media = node.value as MediaValue | null | undefined
 
@@ -64,7 +141,7 @@ export default function RichTextContent({
   }
 
   return (
-    <div className="prose prose-neutral max-w-none text-ft-text prose-p:leading-8 prose-a:text-ft-accent prose-a:underline-offset-4 prose-strong:text-ft-text prose-blockquote:border-ft-accent prose-blockquote:text-ft-muted">
+    <div className="rich-text">
       <RichText data={content} converters={jsxConverters} />
     </div>
   )
