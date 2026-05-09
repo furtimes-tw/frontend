@@ -1,5 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import JsonLd from '@/components/JsonLd'
+import { buildBreadcrumbStructuredData } from '@/lib/structured-data'
+import { getSiteURL } from '@/lib/site'
 import { buildMetadata } from '@/lib/seo'
 
 export const metadata: Metadata = buildMetadata({
@@ -213,7 +216,7 @@ export default function AboutPage() {
                 key={item.title}
                 className="rounded-2xl border border-ft-border bg-ft-surface p-5"
               >
-                <div className="mb-4 inline-flex rounded-full border border-ft-accent-border bg-ft-accent-soft px-3 py-1 text-xs font-medium text-ft-accent">
+                <div className="text-xl font-bold text-ft-text">
                   {item.title}
                 </div>
                 <p className="text-sm leading-6 text-ft-muted">

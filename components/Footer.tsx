@@ -16,7 +16,7 @@ const footerLinks = [
     links: [
       { href: '/announcements', label: '公告' },
       { href: '/sponsors', label: '贊助' },
-      { href: '/about', label: '關於 FurTimes' },
+      { href: '/about', label: '關於獸時報' },
     ],
   },
   {

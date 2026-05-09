@@ -4,8 +4,16 @@ import { notFound } from 'next/navigation'
 import { getPostBySlug, getCategoryLabel, getMediaURL } from '@/lib/cms'
 import { CMSPost } from '@/types/cms'
 import RichTextContent from '@/components/RichTextContent'
+import JsonLd from '@/components/JsonLd'
+import {
+  buildBreadcrumbStructuredData,
+  buildPostStructuredData,
+} from '@/lib/structured-data'
 import { buildMetadata } from '@/lib/seo'
-import { normalizeMediaURL } from '@/lib/site'
+import {
+  getSiteURL,
+  normalizeMediaURL,
+} from '@/lib/site'
 
 function formatDate(dateString?: string | null) {
   if (!dateString) return '未設定發布時間'
@@ -126,6 +134,15 @@ export default async function PostPage({
 
   return (
     <main className="mx-auto max-w-5xl px-5 py-10 sm:px-6 lg:px-8">
+      <JsonLd data={buildPostStructuredData(post)} />
+      <JsonLd
+        data={buildBreadcrumbStructuredData([
+          { name: '首頁', url: getSiteURL('/') },
+          { name: '文章', url: getSiteURL('/posts') },
+          { name: post.title, url: getSiteURL(`/posts/${post.slug}`) },
+        ])}
+      />
+
       <article className="mx-auto max-w-3xl">
         <div className="mb-6">
           <Link

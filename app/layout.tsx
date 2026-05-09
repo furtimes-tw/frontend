@@ -1,9 +1,14 @@
-import "./globals.css";
-import type { Metadata } from 'next';
-import Script from 'next/script';
+import "./globals.css"
+import type { Metadata } from 'next'
+import Script from 'next/script'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
-import { buildMetadata } from '@/lib/seo';
+import JsonLd from '@/components/JsonLd'
+import {
+  buildOrganizationStructuredData,
+  buildWebsiteStructuredData,
+} from '@/lib/structured-data'
+import { buildMetadata } from '@/lib/seo'
 
 export const metadata: Metadata = buildMetadata()
 
@@ -27,6 +32,9 @@ export default function RootLayout({
                 })();
             `}
         </Script>
+
+        <JsonLd data={buildWebsiteStructuredData()} />
+        <JsonLd data={buildOrganizationStructuredData()} />
 
         <Navbar />
 

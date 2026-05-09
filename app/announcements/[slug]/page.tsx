@@ -2,6 +2,12 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import RichTextContent from '@/components/RichTextContent'
+import JsonLd from '@/components/JsonLd'
+import {
+  buildAnnouncementStructuredData,
+  buildBreadcrumbStructuredData,
+} from '@/lib/structured-data'
+import { getSiteURL } from '@/lib/site'
 import { formatDate, getAnnouncementBySlug } from '@/lib/cms'
 import { buildMetadata } from '@/lib/seo'
 
@@ -81,6 +87,18 @@ export default async function AnnouncementPage({
 
   return (
     <main className="mx-auto max-w-4xl px-5 py-10 sm:px-6 lg:px-8">
+    <JsonLd data={buildAnnouncementStructuredData(announcement)} />
+    <JsonLd
+      data={buildBreadcrumbStructuredData([
+        { name: '首頁', url: getSiteURL('/') },
+        { name: '公告', url: getSiteURL('/announcements') },
+        {
+          name: announcement.title,
+          url: getSiteURL(`/announcements/${announcement.slug}`),
+        },
+      ])}
+    />
+
       <article className="mx-auto max-w-3xl">
         <div className="mb-6">
           <Link
