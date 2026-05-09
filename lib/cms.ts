@@ -61,6 +61,12 @@ async function fetchCMS<T>(path: string, revalidate = 60): Promise<T> {
   return res.json()
 }
 
+function isPublished<T extends { publishedAt?: string | null }>(item: T) {
+  if (!item.publishedAt) return false
+
+  return new Date(item.publishedAt).getTime() <= Date.now()
+}
+
 export async function getPosts(limit = 12): Promise<CMSPost[]> {
   const data = await fetchCMS<PayloadListResponse<CMSPost>>(
     `/api/posts?depth=2&sort=-publishedAt&limit=${limit}`
