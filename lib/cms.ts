@@ -100,6 +100,16 @@ export async function getPostsByTagSlug(
   return data.docs
 }
 
+export async function getFeaturedPost(): Promise<CMSPost | null> {
+  const data = await fetchCMS<PayloadListResponse<CMSPost>>(
+    `/api/posts?where[featured][equals]=true&depth=2&sort=featuredOrder,-publishedAt&limit=5`
+  )
+
+  const posts = data.docs.filter(isPublished)
+
+  return posts[0] ?? null
+}
+
 export async function getTagBySlug(slug: string): Promise<CMSTag | null> {
   const data = await fetchCMS<PayloadListResponse<CMSTag>>(
     `/api/tags?where[slug][equals]=${encodeURIComponent(slug)}&limit=1`

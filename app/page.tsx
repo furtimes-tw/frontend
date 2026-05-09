@@ -6,6 +6,7 @@ import SponsorCard from '@/components/SponsorCard'
 import EmptyState from '@/components/EmptyState'
 import {
     formatDate,
+    getFeaturedPost,
     getAnnouncements,
     getFeaturedSponsors,
     getLatestNewsflash,
@@ -27,16 +28,20 @@ function getThumbnail(post: any) {
 }
 
 export default async function HomePage() {
-    const [latestReports, latestNewsflash, announcements, featuredSponsors] =
+    const [featuredPost, latestReports, latestNewsflash, announcements, featuredSponsors] =
         await Promise.all([
+        getFeaturedPost(),
         getLatestReports(7),
         getLatestNewsflash(5),
         getAnnouncements(4),
         getFeaturedSponsors(6),
     ])
 
-    const heroPost = latestReports[0]
-    const secondaryReports = latestReports.slice(1)
+    const heroPost = featuredPost ?? latestReports[0]
+    const reportPosts = latestReports.filter(
+      (post) => post.id !== heroPost?.id
+    )
+    // const secondaryReports = latestReports.slice(1)
 
     const heroThumbnail = heroPost ? getThumbnail(heroPost) : null
 
@@ -66,8 +71,8 @@ export default async function HomePage() {
 
             <h1 className="text-3xl font-bold leading-tight sm:text-4xl">
             <Link
-            href={`/posts/${heroPost.slug}`}
-            className="hover:underline"
+              href={`/posts/${heroPost.slug}`}
+              className="hover:underline"
             >
             {heroPost.title}
             </Link>
@@ -173,11 +178,11 @@ export default async function HomePage() {
       <section className="mx-auto max-w-6xl px-5 py-12 sm:px-6 lg:px-8">
         <SectionHeading title="最新報導"  />
 
-        {secondaryReports.length === 0 ? (
+        {reportPosts.length === 0 ? (
           <p className="text-ft-muted">目前沒有更多報導文章。</p>
         ) : (
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {secondaryReports.map((post) => (
+            {reportPosts.map((post) => (
               <PostCard key={post.id} post={post} />
             ))}
           </div>

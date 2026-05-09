@@ -26,6 +26,8 @@ export type CMSPost = {
   publishedAt?: string | null
   updatedAt?: string | null
   createdAt?: string | null
+  featured?: boolean | null
+  featuredOrder?: number | null
   content?: unknown
   thumbnail?: CMSMedia | number | string | null
   tags?: CMSTag[] | (number | string)[] | null
