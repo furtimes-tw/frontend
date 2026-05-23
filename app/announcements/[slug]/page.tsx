@@ -42,37 +42,6 @@ function getAnnouncementDescription(announcement: any) {
   return text.length > 120 ? `${text.slice(0, 120)}…` : text
 }
 
-function getAnnouncementDescription(announcement: any) {
-  const content = announcement.body
-  const children = content?.root?.children
-
-  if (!Array.isArray(children)) {
-    return undefined
-  }
-
-  const texts: string[] = []
-
-  function walk(node: any) {
-    if (!node) return
-
-    if (typeof node.text === 'string') {
-      texts.push(node.text)
-    }
-
-    if (Array.isArray(node.children)) {
-      node.children.forEach(walk)
-    }
-  }
-
-  children.forEach(walk)
-
-  const text = texts.join(' ').replace(/\s+/g, ' ').trim()
-
-  if (!text) return undefined
-
-  return text.length > 120 ? `${text.slice(0, 120)}…` : text
-}
-
 export default async function AnnouncementPage({
   params,
 }: {
