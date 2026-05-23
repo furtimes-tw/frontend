@@ -170,7 +170,7 @@ function compareSponsors(a: CMSSponsor, b: CMSSponsor) {
     secondary: 2,
     standard: 3,
     special: 4,
-    individual: 5,
+    supporter: 10,
   }
 
   const tierDiff = tierRank[a.tier] - tierRank[b.tier]

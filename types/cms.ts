@@ -53,6 +53,7 @@ export type CMSSponsor = {
   link?: string | null
   description?: string | null
   logo?: CMSMedia | number | string | null
+  sortOrder?: number | null
 }
 
 export type PayloadListResponse<T> = {

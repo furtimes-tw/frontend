@@ -110,7 +110,7 @@ export default function SponsorCard({
       </h3>
 
       {sponsor.description &&
-      variant !== 'individual' ? (
+      variant !== 'supporter' ? (
         <p className="mt-3 line-clamp-3 text-sm leading-6 text-ft-muted">
           {sponsor.description}
         </p>
