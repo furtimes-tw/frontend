@@ -50,9 +50,12 @@ export function formatDate(dateString?: string | null) {
 async function fetchCMS<T>(path: string, revalidate = 60): Promise<T> {
   const url = buildURL(path)
 
-  const res = await fetch(url, {
-    next: { revalidate },
-  })
+  const res = await fetch(
+    url,
+    process.env.NODE_ENV === 'development'
+      ? { cache: 'no-store' }
+      : { next: { revalidate } }
+  )
 
   if (!res.ok) {
     throw new Error(`Failed to fetch CMS data: ${res.status} ${res.statusText}`)
@@ -71,14 +74,19 @@ export async function getPosts(limit = 12): Promise<CMSPost[]> {
   const data = await fetchCMS<PayloadListResponse<CMSPost>>(
     `/api/posts?depth=2&sort=-publishedAt&limit=${limit}`
   )
-  return data.docs
+  return data.docs.filter(isPublished)
 }
 
 export async function getPostBySlug(slug: string): Promise<CMSPost | null> {
   const data = await fetchCMS<PayloadListResponse<CMSPost>>(
     `/api/posts?where[slug][equals]=${encodeURIComponent(slug)}&depth=2&limit=1`
   )
-  return data.docs[0] ?? null
+
+  const post = data.docs[0]
+
+  if (!post || !isPublished(post)) return null
+
+  return post
 }
 
 export async function getPostsByCategory(
@@ -88,7 +96,7 @@ export async function getPostsByCategory(
   const data = await fetchCMS<PayloadListResponse<CMSPost>>(
     `/api/posts?where[category][equals]=${encodeURIComponent(category)}&depth=2&sort=-publishedAt&limit=${limit}`
   )
-  return data.docs
+  return data.docs.filter(isPublished)
 }
 
 export async function getPostsByTagSlug(
@@ -103,7 +111,7 @@ export async function getPostsByTagSlug(
     `/api/posts?where[tags][in]=${encodeURIComponent(String(tag.id))}&depth=2&sort=-publishedAt&limit=${limit}`
   )
 
-  return data.docs
+  return data.docs.filter(isPublished)
 }
 
 export async function getFeaturedPost(): Promise<CMSPost | null> {

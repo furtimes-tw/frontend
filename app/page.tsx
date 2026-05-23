@@ -38,9 +38,7 @@ export default async function HomePage() {
     ])
 
     const heroPost = featuredPost ?? latestReports[0]
-    const reportPosts = latestReports.filter(
-      (post) => post.id !== heroPost?.id
-    )
+    const reportPosts = latestReports
     // const secondaryReports = latestReports.slice(1)
 
     const heroThumbnail = heroPost ? getThumbnail(heroPost) : null
@@ -51,7 +49,7 @@ export default async function HomePage() {
         <div className="mx-auto grid max-w-6xl gap-8 px-5 py-10 sm:px-6 lg:grid-cols-[1.5fr_1fr] lg:px-8">
         <div>
         <p className="mb-3 text-sm font-medium text-ft-muted">
-        Furry Culture / News / Community
+          獸文化 / 新聞 / 社群
         </p>
 
         {heroPost ? (
@@ -65,27 +63,27 @@ export default async function HomePage() {
             ) : null}
 
             <div className="p-6">
-            <div className="mb-3 text-sm text-ft-subtle">
-            {formatDate(heroPost.publishedAt)}
-            </div>
+              <div className="mb-3 text-sm text-ft-subtle">
+                {formatDate(heroPost.publishedAt)}
+              </div>
 
-            <h1 className="text-3xl font-bold leading-tight sm:text-4xl">
-            <Link
-              href={`/posts/${heroPost.slug}`}
-              className="hover:underline"
-            >
-            {heroPost.title}
-            </Link>
-            </h1>
+              <h1 className="text-3xl font-bold leading-tight sm:text-4xl">
+                <Link
+                  href={`/posts/${heroPost.slug}`}
+                  className="hover:underline"
+                >
+                  {heroPost.title}
+                </Link>
+              </h1>
 
-            <div className="mt-5">
-            <Link
-            href={`/posts/${heroPost.slug}`}
-            className="inline-flex rounded-full bg-ft-brand px-5 py-3 text-sm font-semibold text-white shadow-[0_8px_20px_rgba(40,129,159,0.35)] transition hover:-translate-y-0.5 hover:bg-ft-brand-dark hover:shadow-[0_12px_26px_rgba(40,129,159,0.45)]"
-            >
-            閱讀推薦報導
-            </Link>
-            </div>
+              <div className="mt-5">
+                <Link
+                  href={`/posts/${heroPost.slug}`}
+                  className="inline-flex rounded-full bg-ft-brand px-5 py-3 text-sm font-semibold text-white shadow-[0_8px_20px_rgba(40,129,159,0.35)] transition hover:-translate-y-0.5 hover:bg-ft-brand-dark hover:shadow-[0_12px_26px_rgba(40,129,159,0.45)]"
+                >
+                  閱讀推薦報導
+                </Link>
+              </div>
             </div>
             </article>
         ) : (
