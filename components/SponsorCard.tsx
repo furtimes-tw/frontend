@@ -10,7 +10,7 @@ type SponsorCardVariant =
 
 type Props = {
   sponsor: CMSSponsor
-  compact?: boolean
+  variant?: SponsorCardVariant
 }
 
 function getLogo(sponsor: CMSSponsor) {
