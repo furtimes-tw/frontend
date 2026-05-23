@@ -9,7 +9,7 @@ type SponsorVariant =
   | 'primary'
   | 'secondary'
   | 'standard'
-  | 'individual'
+  | 'supporter'
   | 'special'
 
 export const metadata: Metadata = buildMetadata({
@@ -26,8 +26,8 @@ export default async function SponsorsPage() {
     (sponsor) => sponsor.sponsorType === 'company'
   )
 
-  const individualSponsors = sponsors.filter(
-    (sponsor) => sponsor.sponsorType === 'individual'
+  const supporterSponsors = sponsors.filter(
+    (sponsor) => sponsor.sponsorType === 'supporter'
   )
 
   const primarySponsors = companySponsors.filter(
@@ -116,7 +116,7 @@ export default async function SponsorsPage() {
           subtitle="感謝每一位支持獸時報持續運作的獸迷朋友。"
         />
 
-        {individualSponsors.length === 0 ? (
+        {supporterSponsors.length === 0 ? (
           <EmptyState
             title="目前沒有個人贊助者"
             description="如果你也想成為贊助者，歡迎點擊上方的「我要贊助」了解更多資訊。"
@@ -125,11 +125,11 @@ export default async function SponsorsPage() {
           />
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-            {individualSponsors.map((sponsor) => (
+            {supporterSponsors.map((sponsor) => (
               <SponsorCard
                 key={sponsor.id}
                 sponsor={sponsor}
-                variant="individual"
+                variant="supporter"
               />
             ))}
           </div>
