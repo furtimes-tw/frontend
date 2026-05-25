@@ -14,89 +14,91 @@ const navItems = [
 ]
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   function closeMenu() {
-    setIsOpen(false)
+    setMenuOpen(false)
   }
 
   return (
     <header className="sticky top-0 z-50 border-b border-ft-border bg-ft-card/90 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-6 lg:px-8">
-        <Link
-          href="/"
-          className="text-xl font-bold tracking-tight text-ft-text"
-          onClick={closeMenu}
-        >
-          獸時報 FurTimes
-        </Link>
-
-        <div className="flex items-center gap-3">
-          <nav className="hidden items-center gap-4 text-sm text-ft-muted md:flex">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="hover:text-ft-accent"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-
-          <ThemeToggle />
-
-          <button
-            type="button"
-            onClick={() => setIsOpen((value) => !value)}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-ft-border bg-ft-card text-ft-muted transition hover:border-ft-accent-border hover:bg-ft-accent-soft hover:text-ft-text md:hidden"
-            aria-label={isOpen ? '關閉選單' : '開啟選單'}
-            aria-expanded={isOpen}
+      <div className="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between gap-4">
+          <Link
+            href="/"
+            onClick={closeMenu}
+            className="flex shrink-0 items-center gap-2 text-lg font-bold tracking-tight text-ft-text"
           >
-            <span className="sr-only">{isOpen ? '關閉選單' : '開啟選單'}</span>
-            <span aria-hidden="true" className="relative block h-4 w-4">
-              <span
-                className={
-                  isOpen
-                    ? 'absolute left-0 top-1/2 h-0.5 w-4 -translate-y-1/2 rotate-45 rounded bg-current transition'
-                    : 'absolute left-0 top-0 h-0.5 w-4 rounded bg-current transition'
-                }
-              />
-              <span
-                className={
-                  isOpen
-                    ? 'absolute left-0 top-1/2 h-0.5 w-4 -translate-y-1/2 opacity-0 transition'
-                    : 'absolute left-0 top-1/2 h-0.5 w-4 -translate-y-1/2 rounded bg-current transition'
-                }
-              />
-              <span
-                className={
-                  isOpen
-                    ? 'absolute left-0 top-1/2 h-0.5 w-4 -translate-y-1/2 -rotate-45 rounded bg-current transition'
-                    : 'absolute bottom-0 left-0 h-0.5 w-4 rounded bg-current transition'
-                }
-              />
-            </span>
-          </button>
+            <span className="hidden text-ft-text sm:inline">獸時報</span>
+            <span className="text-ft-accent">FurTimes</span>
+          </Link>
+
+          <div className="flex items-center gap-3">
+            <nav className="hidden items-center gap-1 md:flex">
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="rounded-full px-3 py-2 text-sm font-medium text-ft-muted transition hover:bg-ft-accent-soft hover:text-ft-accent"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+
+            <ThemeToggle />
+
+            <button
+              type="button"
+              onClick={() => setMenuOpen((value) => !value)}
+              aria-label={menuOpen ? '關閉選單' : '開啟選單'}
+              aria-expanded={menuOpen}
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-ft-border bg-ft-card text-ft-muted transition hover:border-ft-accent-border hover:bg-ft-accent-soft hover:text-ft-accent md:hidden"
+            >
+              <span className="relative block h-4 w-4" aria-hidden="true">
+                <span
+                  className={`absolute left-0 top-1 block h-0.5 w-4 rounded-full bg-current transition duration-200 ${
+                    menuOpen ? 'translate-y-1 rotate-45' : ''
+                  }`}
+                />
+                <span
+                  className={`absolute left-0 top-2 block h-0.5 w-4 rounded-full bg-current transition duration-200 ${
+                    menuOpen ? 'opacity-0' : 'opacity-100'
+                  }`}
+                />
+                <span
+                  className={`absolute left-0 top-3 block h-0.5 w-4 rounded-full bg-current transition duration-200 ${
+                    menuOpen ? '-translate-y-1 -rotate-45' : ''
+                  }`}
+                />
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <div
+          className={`grid transition-[grid-template-rows,opacity,transform] duration-200 ease-out md:hidden ${
+            menuOpen
+              ? 'grid-rows-[1fr] translate-y-0 opacity-100'
+              : 'grid-rows-[0fr] -translate-y-2 opacity-0'
+          }`}
+        >
+          <div className="overflow-hidden">
+            <nav className="flex flex-col gap-1 border-t border-ft-border py-3">
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={closeMenu}
+                  className="rounded-2xl px-4 py-3 text-sm font-medium text-ft-muted transition hover:bg-ft-accent-soft hover:text-ft-accent"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
         </div>
       </div>
-
-      {isOpen ? (
-        <div className="border-t border-ft-border bg-ft-card md:hidden">
-          <nav className="mx-auto grid max-w-6xl gap-1 px-5 py-3 sm:px-6">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={closeMenu}
-                className="rounded-xl px-3 py-2 text-sm font-medium text-ft-muted transition hover:bg-ft-accent-soft hover:text-ft-accent"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
-      ) : null}
     </header>
   )
 }

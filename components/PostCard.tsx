@@ -24,8 +24,9 @@ function getTags(post: CMSPost) {
 export default function PostCard({ post }: Props) {
   const thumbnail = getThumbnail(post)
   const tags = getTags(post)
+  const href = `/posts/${post.slug}`
 
-  return (
+   return (
     <article className="overflow-hidden rounded-xl border border-ft-border bg-ft-card shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
       {thumbnail?.url ? (
         <img
