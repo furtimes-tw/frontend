@@ -4,6 +4,7 @@ import PostCard from '@/components/PostCard'
 import SectionHeading from '@/components/SectionHeading'
 import SponsorCard from '@/components/SponsorCard'
 import EmptyState from '@/components/EmptyState'
+import HomeExpandablePanel from '@/components/HomeExpandablePanel'
 import {
   formatDate,
   getFeaturedPost,
@@ -46,6 +47,20 @@ export default async function HomePage() {
   const heroPost = featuredPost ?? latestReports[0]
   const reportPosts = latestReports
   const heroThumbnail = heroPost ? getThumbnail(heroPost) : null
+  const newsflashPanelItems = latestNewsflash.map((post) => ({
+    id: post.id,
+    title: post.title,
+    href: `/posts/${post.slug}`,
+    date: formatDate(post.publishedAt),
+  }))
+
+  const announcementPanelItems = announcements.map((item) => ({
+    id: item.id,
+    title: item.title,
+    href: `/announcements/${item.slug}`,
+    date: formatDate(item.publishedAt),
+    pinned: item.pinned,
+  }))
 
   return (
     <main>
@@ -95,81 +110,23 @@ export default async function HomePage() {
           </div>
 
           <aside className="grid h-full gap-6 lg:grid-rows-2">
-            <section className="flex min-h-0 flex-col rounded-3xl border border-ft-border bg-ft-card p-6 shadow-sm">
-              <div className="mb-4 flex items-center justify-between gap-4">
-                <h2 className="text-xl font-bold">快訊</h2>
-                <Link
-                  href="/category/Newsflash"
-                  className="text-sm text-ft-muted hover:text-ft-accent"
-                >
-                  更多
-                </Link>
-              </div>
+            <HomeExpandablePanel
+              title="快訊"
+              eyebrow="Newsflash"
+              moreHref="/category/Newsflash"
+              moreLabel="查看所有快訊"
+              emptyText="目前沒有快訊。"
+              items={newsflashPanelItems}
+            />
 
-              {latestNewsflash.length === 0 ? (
-                <p className="text-sm text-ft-muted">目前沒有快訊。</p>
-              ) : (
-                <div className="flex flex-1 flex-col gap-4">
-                  {latestNewsflash.map((post) => (
-                    <article key={post.id}>
-                      <div className="mb-1 text-xs text-ft-subtle">
-                        {formatDate(post.publishedAt)}
-                      </div>
-
-                      <h3 className="text-sm font-semibold leading-6">
-                        <Link
-                          href={`/posts/${post.slug}`}
-                          className="hover:underline"
-                        >
-                          {post.title}
-                        </Link>
-                      </h3>
-                    </article>
-                  ))}
-                </div>
-              )}
-            </section>
-
-            <section className="flex min-h-0 flex-col rounded-3xl border border-ft-border bg-ft-card p-6 shadow-sm">
-              <div className="mb-4 flex items-center justify-between gap-4">
-                <h2 className="text-xl font-bold">公告</h2>
-                <Link
-                  href="/announcements"
-                  className="text-sm text-ft-muted hover:text-ft-accent"
-                >
-                  更多
-                </Link>
-              </div>
-
-              {announcements.length === 0 ? (
-                <p className="text-sm text-ft-muted">目前沒有公告。</p>
-              ) : (
-                <div className="flex flex-1 flex-col gap-4">
-                  {announcements.map((item) => (
-                    <article key={item.id}>
-                      <div className="mb-1 flex items-center gap-2 text-xs text-ft-subtle">
-                        {item.pinned ? (
-                          <span className="rounded border border-ft-accent-border bg-ft-accent-soft px-2 py-0.5 text-ft-accent">
-                            置頂
-                          </span>
-                        ) : null}
-
-                        <time>{formatDate(item.publishedAt)}</time>
-                      </div>
-
-                      <h3 className="text-sm font-semibold leading-6">
-                        <Link
-                          href={`/announcements/${item.slug}`}
-                          className="hover:underline"
-                        >
-                          {item.title}
-                        </Link>
-                      </h3>
-                    </article>
-                  ))}
-                </div>
-              )}
-            </section>
+            <HomeExpandablePanel
+              title="公告"
+              eyebrow="Announcements"
+              moreHref="/announcements"
+              moreLabel="查看所有公告"
+              emptyText="目前沒有公告。"
+              items={announcementPanelItems}
+            />
           </aside>
         </div>
       </section>
