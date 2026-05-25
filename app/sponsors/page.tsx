@@ -64,14 +64,14 @@ export default async function SponsorsPage() {
 
         <div className="mt-6 flex flex-wrap gap-3">
           <a
-            href="#"
+            href="mailto:sponsor@furtimes.tw"
             className="rounded-full bg-ft-brand px-5 py-3 text-sm font-semibold text-white shadow-[0_8px_20px_rgba(40,129,159,0.35)] transition hover:-translate-y-0.5 hover:bg-ft-brand-dark hover:shadow-[0_12px_26px_rgba(40,129,159,0.45)]"
           >
             我要贊助
           </a>
 
           <a
-            href="#"
+            href="https://forms.gle/ycPrax5uTrpLXA1Z9"
             className="rounded-full border border-ft-border bg-ft-card px-5 py-3 text-sm font-medium text-ft-muted transition hover:-translate-y-0.5 hover:border-ft-accent-border hover:bg-ft-accent-soft hover:text-ft-text"
           >
             合作洽談
