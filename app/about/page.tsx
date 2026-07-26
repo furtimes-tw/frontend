@@ -4,6 +4,7 @@ import JsonLd from '@/components/JsonLd'
 import { buildBreadcrumbStructuredData } from '@/lib/structured-data'
 import { getSiteURL } from '@/lib/site'
 import { buildMetadata } from '@/lib/seo'
+import { features } from '@/lib/features'
 
 export const metadata: Metadata = buildMetadata({
   title: '關於 FurTimes',
@@ -29,9 +30,9 @@ const focusItems = [
       '獸文化中的互動、議題、趨勢、觀察與文化脈絡。',
   },
   {
-    title: '合作與產業',
+    title: '產業與周邊',
     description:
-      '贊助、品牌合作、活動協力、周邊製作與文化產業連結。',
+      '活動協力、周邊製作、文化產業與相關發展觀察。',
   },
 ]
 
@@ -56,11 +57,15 @@ const contentTypes = [
     description:
       '與創作者、主辦方、社群人物或相關單位的對話。',
   },
-  {
-    title: '贊助內容',
-    description:
-      '合作曝光、互惠報導與贊助回饋內容，並會盡可能清楚標示。',
-  },
+  ...(features.sponsors
+    ? [
+        {
+          title: '贊助內容',
+          description:
+            '合作曝光、互惠報導與贊助回饋內容，並會盡可能清楚標示。',
+        },
+      ]
+    : []),
 ]
 
 const editorialPrinciples = [
@@ -113,12 +118,14 @@ export default function AboutPage() {
               查看最新文章
             </Link>
 
-            <Link
-              href="/sponsors"
-              className="rounded-full border border-ft-border bg-ft-card px-5 py-3 text-sm font-medium text-ft-muted transition hover:-translate-y-0.5 hover:border-ft-accent-border hover:bg-ft-accent-soft hover:text-ft-text"
-            >
-              贊助與合作
-            </Link>
+            {features.sponsors ? (
+              <Link
+                href="/sponsors"
+                className="rounded-full border border-ft-border bg-ft-card px-5 py-3 text-sm font-medium text-ft-muted transition hover:-translate-y-0.5 hover:border-ft-accent-border hover:bg-ft-accent-soft hover:text-ft-text"
+              >
+                贊助與合作
+              </Link>
+            ) : null}
           </div>
         </div>
       </section>
@@ -271,10 +278,10 @@ export default function AboutPage() {
 
           <div className="mt-6">
             <Link
-              href="/sponsors"
+              href="mailto:sponsor@furtimes.tw"
               className="inline-flex rounded-full bg-ft-brand px-4 py-2 text-sm font-semibold text-white transition hover:bg-ft-brand-dark"
             >
-              查看贊助與合作
+              聯絡贊助窗口
             </Link>
           </div>
         </article>

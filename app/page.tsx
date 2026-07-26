@@ -15,6 +15,7 @@ import {
   getMediaURL,
 } from '@/lib/cms'
 import { buildMetadata } from '@/lib/seo'
+import { features } from '@/lib/features'
 
 export const metadata: Metadata = buildMetadata({
   description:
@@ -41,7 +42,7 @@ export default async function HomePage() {
     getLatestReports(7),
     getLatestNewsflash(5),
     getAnnouncements(4),
-    getFeaturedSponsors(6),
+    features.sponsors ? getFeaturedSponsors(6) : Promise.resolve([]),
   ])
 
   const heroPost = featuredPost ?? latestReports[0]
@@ -158,7 +159,7 @@ export default async function HomePage() {
         <div className="mx-auto max-w-6xl px-5 py-12 sm:px-6 lg:px-8">
           <SectionHeading title="探索內容分類" />
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <Link
               href="/category/Report"
               className="rounded-2xl border border-ft-border bg-ft-card p-5 transition hover:border-ft-accent-border hover:bg-ft-accent-soft"
@@ -189,50 +190,54 @@ export default async function HomePage() {
               </p>
             </Link>
 
+            {features.sponsors ? (
+              <Link
+                href="/category/Sponsor"
+                className="rounded-2xl border border-ft-border bg-ft-card p-5 transition hover:border-ft-accent-border hover:bg-ft-accent-soft"
+              >
+                <h3 className="text-lg font-bold text-ft-text">贊助內容</h3>
+                <p className="mt-2 text-sm text-ft-muted">
+                  合作曝光與互惠報導。
+                </p>
+              </Link>
+            ) : null}
+          </div>
+        </div>
+      </section>
+
+      {features.sponsors ? (
+        <section className="mx-auto max-w-6xl px-5 py-12 sm:px-6 lg:px-8">
+          <SectionHeading title="贊助夥伴" />
+
+          {featuredSponsors.length === 0 ? (
+            <EmptyState
+              title="目前沒有贊助夥伴"
+              description="我們正在積極尋找贊助夥伴，如有興趣歡迎與我們洽談！"
+              actionHref="/sponsors"
+              actionLabel="了解如何贊助"
+            />
+          ) : (
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {featuredSponsors.map((sponsor) => (
+                <SponsorCard
+                  key={sponsor.id}
+                  sponsor={sponsor}
+                  variant={sponsor.tier === 'primary' ? 'secondary' : 'standard'}
+                />
+              ))}
+            </div>
+          )}
+
+          <div className="mt-6">
             <Link
-              href="/category/Sponsor"
-              className="rounded-2xl border border-ft-border bg-ft-card p-5 transition hover:border-ft-accent-border hover:bg-ft-accent-soft"
+              href="/sponsors"
+              className="inline-flex rounded-full border border-ft-border bg-ft-card px-4 py-2 text-sm text-ft-muted transition hover:border-ft-accent-border hover:bg-ft-accent-soft hover:text-ft-text"
             >
-              <h3 className="text-lg font-bold text-ft-text">贊助內容</h3>
-              <p className="mt-2 text-sm text-ft-muted">
-                合作曝光與互惠報導。
-              </p>
+              查看所有贊助與支持者
             </Link>
           </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-6xl px-5 py-12 sm:px-6 lg:px-8">
-        <SectionHeading title="贊助夥伴" />
-
-        {featuredSponsors.length === 0 ? (
-          <EmptyState
-            title="目前沒有贊助夥伴"
-            description="我們正在積極尋找贊助夥伴，如有興趣歡迎與我們洽談！"
-            actionHref="/sponsors"
-            actionLabel="了解如何贊助"
-          />
-        ) : (
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {featuredSponsors.map((sponsor) => (
-              <SponsorCard
-                key={sponsor.id}
-                sponsor={sponsor}
-                variant={sponsor.tier === 'primary' ? 'secondary' : 'standard'}
-              />
-            ))}
-          </div>
-        )}
-
-        <div className="mt-6">
-          <Link
-            href="/sponsors"
-            className="inline-flex rounded-full border border-ft-border bg-ft-card px-4 py-2 text-sm text-ft-muted transition hover:border-ft-accent-border hover:bg-ft-accent-soft hover:text-ft-text"
-          >
-            查看所有贊助與支持者
-          </Link>
-        </div>
-      </section>
+        </section>
+      ) : null}
     </main>
   )
 }

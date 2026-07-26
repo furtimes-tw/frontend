@@ -5,6 +5,9 @@ import EmptyState from '@/components/EmptyState'
 import { getSponsors } from '@/lib/cms'
 import { buildMetadata } from '@/lib/seo'
 
+import { notFound } from 'next/navigation'
+import { features } from '@/lib/features'
+
 type SponsorVariant =
   | 'primary'
   | 'secondary'
@@ -20,6 +23,10 @@ export const metadata: Metadata = buildMetadata({
 })
 
 export default async function SponsorsPage() {
+  if (!features.sponsors) {
+    notFound()
+  }
+
   const sponsors = await getSponsors(100)
 
   const companySponsors = sponsors.filter(

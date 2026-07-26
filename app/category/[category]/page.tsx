@@ -9,6 +9,7 @@ import {
   isValidCategory,
 } from '@/lib/cms'
 import { buildMetadata } from '@/lib/seo'
+import { features } from '@/lib/features'
 
 export async function generateMetadata({
   params,
@@ -40,6 +41,10 @@ export default async function CategoryPage({
   params: Promise<{ category: string }>
 }) {
   const { category } = await params
+
+  if (!features.sponsors && category === 'Sponsor') {
+    notFound()
+  }
 
   if (!isValidCategory(category)) {
     notFound()

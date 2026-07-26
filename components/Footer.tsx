@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { features } from '@/lib/features'
 
 const footerLinks = [
   {
@@ -15,15 +16,23 @@ const footerLinks = [
     title: '網站',
     links: [
       { href: '/announcements', label: '公告' },
-      { href: '/sponsors', label: '贊助' },
+      ...(features.sponsors
+          ? [{ href: '/sponsors', label: '贊助' }]
+          : []),
       { href: '/about', label: '關於獸時報' },
     ],
   },
   {
     title: '合作',
     links: [
-      { href: '/sponsors', label: '贊助與合作' },
-      { href: 'mailto:furtimestw@gmail.com', label: '聯絡我們', external: true },
+      ...(features.sponsors
+          ? [{ href: '/sponsors', label: '贊助與合作' }]
+          : []),
+      {
+        href: 'mailto:furtimestw@gmail.com',
+        label: '聯絡我們',
+        external: true,
+      },
     ],
   },
 ]

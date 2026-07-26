@@ -3,13 +3,16 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import ThemeToggle from '@/components/ThemeToggle'
+import { features } from '@/lib/features'
 
 const navItems = [
   { href: '/', label: '首頁' },
   { href: '/posts', label: '文章' },
   { href: '/category/Newsflash', label: '快訊' },
   { href: '/announcements', label: '公告' },
-  { href: '/sponsors', label: '贊助' },
+  ...(features.sponsors
+      ? [{ href: '/sponsors', label: '贊助' }]
+      : []),
   { href: '/about', label: '關於' },
 ]
 
