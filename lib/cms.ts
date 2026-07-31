@@ -13,7 +13,7 @@ function buildURL(path: string) {
 }
 
 export type PaginatedPostsResult = {
-  docs: Post[]
+  docs: CMSPost[]
   totalDocs: number
   limit: number
   totalPages: number
