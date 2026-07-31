@@ -12,6 +12,32 @@ function buildURL(path: string) {
   return getCMSURL(path)
 }
 
+export type PaginatedPostsResult = {
+  docs: Post[]
+  totalDocs: number
+  limit: number
+  totalPages: number
+  page: number
+  pagingCounter: number
+  hasPrevPage: boolean
+  hasNextPage: boolean
+  prevPage: number | null
+  nextPage: number | null
+}
+
+export async function getPaginatedPosts(page = 1, limit = 12) {
+  const safePage = Number.isFinite(page) && page > 0 ? page : 1
+
+  const data = await fetchCMS<PaginatedPostsResult>(
+    `/api/posts?depth=2&sort=-publishedAt&limit=${limit}&page=${safePage}`,
+  )
+
+  return {
+    ...data,
+    docs: data.docs.filter(isPublished),
+  }
+}
+
 export function getMediaURL(path?: string | null)  {
   return normalizeMediaURL(path)
 }
