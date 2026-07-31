@@ -39,7 +39,7 @@ export default async function HomePage() {
     featuredSponsors,
   ] = await Promise.all([
     getFeaturedPost(),
-    getLatestReports(7),
+    getLatestReports(8),
     getLatestNewsflash(5),
     getAnnouncements(4),
     features.sponsors ? getFeaturedSponsors(6) : Promise.resolve([]),
