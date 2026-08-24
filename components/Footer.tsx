@@ -42,13 +42,23 @@ export default function Footer() {
 
   return (
     <footer className="border-t border-ft-border bg-ft-card">
-      <div className="mx-auto grid max-w-6xl gap-10 px-5 py-10 sm:px-6 md:grid-cols-[1.4fr_2fr] lg:px-8">
+      <div className="mx-auto grid max-w-6xl gap-10 px-5 py-12 sm:px-6 md:grid-cols-[1.4fr_2fr] lg:px-8">
         <div>
-          <Link href="/" className="text-xl font-bold tracking-tight text-ft-text">
-            獸時報 FurTimes
+          <Link
+            href="/"
+            className="inline-block"
+            aria-label="獸時報 FurTimes 首頁"
+          >
+            <span className="block">
+              <img
+                src="/brand/furtimes-logo-brand.svg"
+                alt="獸時報 FurTimes"
+                className="h-auto w-52 sm:w-56 lg:w-60"
+              />
+            </span>
           </Link>
 
-          <p className="mt-3 max-w-md text-sm leading-6 text-ft-muted">
+          <p className="mt-5 max-w-md text-sm leading-6 text-ft-muted">
             聚焦獸文化活動、創作、社群與相關產業消息，<br/>整理值得被看見的故事。
           </p>
 

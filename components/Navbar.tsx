@@ -30,10 +30,21 @@ export default function Navbar() {
           <Link
             href="/"
             onClick={closeMenu}
-            className="flex shrink-0 items-center gap-2 text-lg font-bold tracking-tight text-ft-text"
+            className="flex shrink-0 items-center gap-3"
+            aria-label="獸時報 FurTimes 首頁"
           >
-            <span className="hidden text-ft-text sm:inline">獸時報</span>
-            <span className="text-ft-accent">FurTimes</span>
+            <span className="relative block h-8 w-[49px] shrink-0">
+              <img
+                src="/brand/furtimes-symbol-brand.svg"
+                alt="獸時報 logo"
+                aria-hidden="true"
+                className="h-8 w-auto shrink-0"
+              />
+            </span>
+
+            <span className="hidden text-lg font-bold tracking-tight text-ft-text sm:inline">
+              獸時報 FurTimes
+            </span>
           </Link>
 
           <div className="flex items-center gap-3">

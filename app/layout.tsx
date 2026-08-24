@@ -1,5 +1,5 @@
 import "./globals.css"
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import Script from 'next/script'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
@@ -11,6 +11,10 @@ import {
 import { buildMetadata } from '@/lib/seo'
 
 export const metadata: Metadata = buildMetadata()
+
+export const viewport: Viewport = {
+  themeColor: '#28819F',
+}
 
 export default function RootLayout({
   children,
