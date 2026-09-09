@@ -25,6 +25,34 @@ export type PaginatedPostsResult = {
   nextPage: number | null
 }
 
+export type Event = {
+  id: string | number
+  title: string
+  startDate: string
+  endDate: string
+  regDateStart: string
+  regDateEnd: string
+  location: string
+  officialURL: string
+  published: boolean
+  tag:
+    | {
+        id: string | number
+        name?: string
+        title?: string
+        slug: string
+      }
+    | string
+    | number
+}
+
+export type EventStatus =
+  | 'registration-not-open'
+  | 'registration-open'
+  | 'registration-closed'
+  | 'ongoing'
+  | 'ended'
+
 export async function getPaginatedPosts(page = 1, limit = 12) {
   const safePage = Number.isFinite(page) && page > 0 ? page : 1
 
@@ -225,4 +253,116 @@ export async function getFeaturedSponsors(limit = 12): Promise<CMSSponsor[]> {
     )
     .sort(compareSponsors)
     .slice(0, limit)
+}
+
+export async function getEvents() {
+  const data = await fetchCMS<{
+    docs: Event[]
+  }>(
+    '/api/events?where[published][equals]=true&sort=-startDate&depth=1&limit=100',
+  )
+
+  return data.docs
+}
+
+export async function getUpcomingEvents(limit = 3) {
+  const now = new Date().toISOString()
+
+  const data = await fetchCMS<{
+    docs: Event[]
+  }>(
+    `/api/events?where[published][equals]=true&where[startDate][greater_than_equal]=${encodeURIComponent(
+      now,
+    )}&sort=startDate&depth=1&limit=${limit}`,
+  )
+
+  return data.docs
+}
+
+export function formatEventDate(startDate: string, endDate: string) {
+  const start = new Date(startDate)
+  const end = new Date(endDate)
+
+  const formatter = new Intl.DateTimeFormat('zh-TW', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    timeZone: 'Asia/Taipei',
+  })
+
+  const startText = formatter.format(start)
+  const endText = formatter.format(end)
+
+  if (startText === endText) {
+    return startText
+  }
+
+  return `${startText} – ${endText}`
+}
+
+export function formatHomePageEventDate(date: string) {
+  const value = new Date(date)
+
+  const monthDay = new Intl.DateTimeFormat('zh-TW', {
+    month: '2-digit',
+    day: '2-digit',
+    timeZone: 'Asia/Taipei',
+  }).format(value)
+
+  const year = new Intl.DateTimeFormat('zh-TW', {
+    year: 'numeric',
+    timeZone: 'Asia/Taipei',
+  }).format(value)
+
+  return {
+    monthDay,
+    year,
+  }
+}
+
+export function getEventStatus(
+  regDateStart: string,
+  regDateEnd: string,
+  startDate: string,
+  endDate: string,
+): EventStatus {
+  const now = new Date()
+
+  const regStart = new Date(regDateStart)
+  const regEnd = new Date(regDateEnd)
+  const eventStart = new Date(startDate)
+  const eventEnd = new Date(endDate)
+
+  if (now < regStart) {
+    return 'registration-not-open'
+  }
+
+  if (now <= regEnd) {
+    return 'registration-open'
+  }
+
+  if (now < eventStart) {
+    return 'registration-closed'
+  }
+
+  if (now <= eventEnd) {
+    return 'ongoing'
+  }
+
+  return 'ended'
+}
+
+export function getEventStatusLabel(status: EventStatus) {
+  switch (status) {
+    case 'registration-not-open':
+      return '尚未開放報名'
+    case 'registration-open':
+      return '開放報名'
+    case 'registration-closed':
+      return '報名截止'
+    case 'ongoing':
+      return '舉辦中'
+    case 'ended':
+      return '已結束'
+  }
 }

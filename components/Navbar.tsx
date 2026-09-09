@@ -8,6 +8,7 @@ import { features } from '@/lib/features'
 const navItems = [
   { href: '/', label: '首頁' },
   { href: '/posts', label: '文章' },
+  { href: '/events', label: '活動' },
   { href: '/category/Newsflash', label: '快訊' },
   { href: '/announcements', label: '公告' },
   ...(features.sponsors

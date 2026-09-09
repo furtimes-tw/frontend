@@ -6,6 +6,7 @@ const footerLinks = [
     title: '內容',
     links: [
       { href: '/posts', label: '所有文章' },
+      { href: '/events', label: '活動' },
       { href: '/category/Newsflash', label: '快訊' },
       { href: '/category/Report', label: '報導' },
       { href: '/category/Column', label: '專欄' },

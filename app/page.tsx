@@ -7,12 +7,15 @@ import EmptyState from '@/components/EmptyState'
 import HomeExpandablePanel from '@/components/HomeExpandablePanel'
 import {
   formatDate,
+  formatEventDate,
+  formatHomePageEventDate,
   getFeaturedPost,
   getAnnouncements,
   getFeaturedSponsors,
   getLatestNewsflash,
   getLatestReports,
   getMediaURL,
+  getUpcomingEvents,
 } from '@/lib/cms'
 import { buildMetadata } from '@/lib/seo'
 import { features } from '@/lib/features'
@@ -37,12 +40,14 @@ export default async function HomePage() {
     latestNewsflash,
     announcements,
     featuredSponsors,
+    upcomingEvents,
   ] = await Promise.all([
     getFeaturedPost(),
     getLatestReports(8),
     getLatestNewsflash(5),
     getAnnouncements(4),
     features.sponsors ? getFeaturedSponsors(6) : Promise.resolve([]),
+    getUpcomingEvents(3),
   ])
 
   const heroPost = featuredPost ?? latestReports[0]
@@ -154,6 +159,81 @@ export default async function HomePage() {
           </Link>
         </div>
       </section>
+
+      <section className="border-y border-ft-border bg-ft-surface">
+        <div className="mx-auto max-w-6xl px-5 py-12 sm:px-6 lg:px-8">
+          <div className="mb-6 flex items-end justify-between gap-4">
+            <div>
+              <p className="text-sm font-medium text-ft-accent">
+                Events
+              </p>
+
+              <h2 className="mt-1 text-2xl font-bold tracking-tight text-ft-text">
+                近期活動
+              </h2>
+            </div>
+
+            <Link
+              href="/events"
+              className="text-sm font-medium text-ft-muted transition hover:text-ft-accent"
+            >
+              查看更多 →
+            </Link>
+          </div>
+
+          {upcomingEvents.length === 0 ? (
+            <p className="text-ft-muted">目前沒有即將舉辦的活動。</p>
+          ) : (
+            <div className="divide-y divide-ft-border rounded-3xl border border-ft-border bg-ft-card px-5 shadow-sm sm:px-7">
+              {upcomingEvents.map((event) => {
+                const date = formatHomePageEventDate(event.startDate)
+
+                return (
+                  <a
+                    key={event.id}
+                    href={event.officialURL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group grid items-center gap-4 py-4 transition sm:grid-cols-[110px_1fr] sm:gap-8"
+                  >
+                    <time
+                      dateTime={event.startDate}
+                      className="flex flex-col"
+                    >
+                      <span className="text-3xl font-bold leading-none tracking-tight text-ft-text sm:text-4xl">
+                        {date.monthDay}
+                      </span>
+                      <span className="mt-2 text-xs font-medium tracking-wide text-ft-subtle">
+                        {date.year}
+                      </span>
+                    </time>
+
+                    <div className="min-w0">
+                      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                        <span className="text-xl font-bold text-ft-text transition group-hover:text-ft-accent sm:text-2xl">
+                          {event.title}
+                        </span>
+
+                        <span
+                          aria-hidden="true"
+                          className="hidden text-ft-subtle sm:inline"
+                        >
+                          |
+                        </span>
+
+                        <span className="text-sm font-medium text-ft-muted">
+                          {event.location}
+                        </span>
+                      </div>
+                    </div>
+                  </a>
+                )
+              })}
+            </div>
+          )}
+        </div>
+      </section>
+
 
       <section className="border-y border-ft-border bg-ft-surface">
         <div className="mx-auto max-w-6xl px-5 py-12 sm:px-6 lg:px-8">
