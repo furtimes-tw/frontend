@@ -204,6 +204,8 @@ export default async function EventPage() {
             <div className="grid gap-4 md:hidden">
               {events.map((event) => {
                 const status = getEventStatus(
+                  event.regDateStart,
+                  event.regDateEnd,
                   event.startDate,
                   event.endDate,
                 )
