@@ -328,8 +328,6 @@ export function getEventStatus(
 ): EventStatus {
   const now = new Date()
 
-  const regStart = new Date(regDateStart)
-  const regEnd = new Date(regDateEnd)
   const eventStart = new Date(startDate)
   const eventEnd = new Date(endDate)
 
@@ -344,6 +342,9 @@ export function getEventStatus(
   if (!regDateStart || !regDateEnd) {
     return 'registration-not-open'
   }
+
+  const regStart = new Date(regDateStart)
+  const regEnd = new Date(regDateEnd)
 
   if (now < regStart) {
     return 'registration-not-open'
