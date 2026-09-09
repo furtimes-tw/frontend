@@ -112,26 +112,26 @@ export default async function EventPage() {
                   </div>
 
                   <div className="overflow-hidden rounded-3xl border border-ft-border bg-ft-card shadow-sm">
-                    <table className="w-full border-collapse text-left">
+                    <table className="w-full table-fixed border-collapse text-left">
                       <thead className="border-b border-ft-border bg-ft-surface">
                         <tr>
-                          <th className="px-5 py-4 text-sm font-semibold text-ft-text">
+                          <th className="w-[26%] px-5 py-4 text-sm font-semibold text-ft-text">
                             日期
                           </th>
 
-                          <th className="px-5 py-4 text-sm font-semibold text-ft-text">
+                          <th className="w-[30%] px-5 py-4 text-sm font-semibold text-ft-text">
                             活動名稱
                           </th>
 
-                          <th className="px-5 py-4 text-sm font-semibold text-ft-text">
+                          <th className="w-[18%] px-5 py-4 text-sm font-semibold text-ft-text">
                             地點
                           </th>
 
-                          <th className="px-5 py-4 text-sm font-semibold text-ft-text">
+                          <th className="w-[16%] px-5 py-4 text-sm font-semibold text-ft-text">
                             活動狀態
                           </th>
 
-                          <th className="px-5 py-4 text-sm font-semibold text-ft-text">
+                          <th className="w-[10%] px-5 py-4 text-sm font-semibold text-ft-text">
                             相關報導
                           </th>
                         </tr>
@@ -185,7 +185,7 @@ export default async function EventPage() {
                                     href={`/tags/${tagSlug}`}
                                     className="text-ft-accent hover:underline"
                                   >
-                                    查看相關報導
+                                    查看報導
                                   </Link>
                                 ) : (
                                   <span className="text-ft-subtle">-</span>

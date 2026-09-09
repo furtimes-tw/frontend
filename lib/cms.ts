@@ -30,8 +30,8 @@ export type Event = {
   title: string
   startDate: string
   endDate: string
-  regDateStart: string
-  regDateEnd: string
+  regDateStart?: string | null
+  regDateEnd?: string | null
   location: string
   officialURL: string
   published: boolean
@@ -321,8 +321,8 @@ export function formatHomePageEventDate(date: string) {
 }
 
 export function getEventStatus(
-  regDateStart: string,
-  regDateEnd: string,
+  regDateStart: string | null | undefined,
+  regDateEnd: string | null | undefined,
   startDate: string,
   endDate: string,
 ): EventStatus {
@@ -333,6 +333,18 @@ export function getEventStatus(
   const eventStart = new Date(startDate)
   const eventEnd = new Date(endDate)
 
+  if (now >= eventStart && now <= eventEnd) {
+    return 'ongoing'
+  }
+
+  if (now > eventEnd) {
+    return 'ended'
+  }
+
+  if (!regDateStart || !regDateEnd) {
+    return 'registration-not-open'
+  }
+
   if (now < regStart) {
     return 'registration-not-open'
   }
@@ -341,15 +353,7 @@ export function getEventStatus(
     return 'registration-open'
   }
 
-  if (now < eventStart) {
-    return 'registration-closed'
-  }
-
-  if (now <= eventEnd) {
-    return 'ongoing'
-  }
-
-  return 'ended'
+  return 'registration-closed'
 }
 
 export function getEventStatusLabel(status: EventStatus) {
