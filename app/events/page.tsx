@@ -140,8 +140,8 @@ export default async function EventPage() {
                       <tbody>
                         {group.events.map((event) => {
                           const status = getEventStatus(
-                            event.regStartDate,
-                            event.regEndDate,
+                            event.regDateStart,
+                            event.regDateEnd,
                             event.startDate,
                             event.endDate,
                           )
